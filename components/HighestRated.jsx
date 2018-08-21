@@ -19,7 +19,9 @@ const HighestRated = ({
 						<Link href={{ pathname: '/player', query: { id: player.id } }}>
 							<li>{player.web_name}</li>
 						</Link>
-						<li>{player.team_code}</li>
+						<Link href={{ pathname: '/team', query: { id: player.team_code } }}>
+							<li>{player.team_code}</li>
+						</Link>
 						<li>{player.now_cost}</li>
 						<li>{player.total_points}</li>
 					</ul>
