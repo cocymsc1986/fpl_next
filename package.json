@@ -1,0 +1,24 @@
+{
+  "name": "fpl_next",
+  "version": "0.0.1",
+  "description": "FPL data webapp front end",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "Michael Cockcroft",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-boost": "^0.1.14",
+    "apollo-link-http": "^1.5.4",
+    "dotenv": "^6.0.0",
+    "graphql": "^0.13.2",
+    "next": "^6.1.1",
+    "next-apollo": "^2.0.0",
+    "react": "^16.4.2",
+    "react-apollo": "^2.1.9",
+    "react-dom": "^16.4.2"
+  }
+}
