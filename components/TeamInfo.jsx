@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 
-const TeamInfo = ({data: { loading, error, team, playersByTeam }, id}) => {
+const TeamInfo = ({ data: { loading, error, team, playersByTeam }, id }) => {
 	if (loading) return "Loading..."
 	if (error) {
 		console.log(error)
