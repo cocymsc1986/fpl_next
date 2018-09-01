@@ -20,8 +20,8 @@ const MostPopular = ({
 }
 
 const playerWithHighestProp = gql`
-  query playerWithHighestProp($prop: String) {
-    playerWithHighestProp(prop: $prop) {
+	query playerWithHighestProp($prop: String) {
+		playerWithHighestProp(prop: $prop) {
 			player {
 				web_name
 				selected_by_percent
@@ -31,8 +31,8 @@ const playerWithHighestProp = gql`
 				form
 				value_form
 			}
-    }
-  }
+		}
+	}
 `
 
 export default graphql(playerWithHighestProp, {
@@ -41,7 +41,7 @@ export default graphql(playerWithHighestProp, {
 			prop: props.stat,
 		}
 	}),
-  props: ({ data }) => ({
-    data
-  })
+	props: ({ data }) => ({
+		data
+	})
 })(MostPopular);

@@ -21,8 +21,8 @@ const PlayerInfo = ({
 }
 
 const player = gql`
-  query player($id: Int) {
-    player(id: $id) {
+	query player($id: Int) {
+	player(id: $id) {
 			web_name
 			selected_by_percent
 			total_points
@@ -31,8 +31,8 @@ const player = gql`
 			form
 			value_form
 			code
-    }
-  }
+		}
+	}
 `
 
 export default graphql(player, {
@@ -41,7 +41,7 @@ export default graphql(player, {
 			id: props.id,
 		}
 	}),
-  props: ({ data }) => ({
-    data
-  })
+	props: ({ data }) => ({
+		data
+	})
 })(PlayerInfo);

@@ -30,12 +30,12 @@ const HighestRated = ({
 				)
 			})}
 		</div>
-	)	
+	)
 }
 
 const playersByPropAndPos = gql`
-  query playersByPropAndPos($prop: String, $position: String, $amount: Int) {
-    playersByPropAndPos(prop: $prop, position: $position, amount: $amount) {
+	query playersByPropAndPos($prop: String, $position: String, $amount: Int) {
+		playersByPropAndPos(prop: $prop, position: $position, amount: $amount) {
 			players {
 				id
 				web_name
@@ -43,8 +43,8 @@ const playersByPropAndPos = gql`
 				now_cost
 				total_points
 			}
-    }
-  }
+		}
+	}
 `
 
 export default graphql(playersByPropAndPos, {
@@ -55,7 +55,7 @@ export default graphql(playersByPropAndPos, {
 			amount: 10
 		}
 	}),
-  props: ({ data }) => ({
-    data
-  })
+	props: ({ data }) => ({
+		data
+	})
 })(HighestRated);

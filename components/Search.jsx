@@ -35,7 +35,7 @@ class Search extends Component {
 		const { searchableData } = this.state;
 		return (
 			<ApolloConsumer>
-        {client => (
+				{client => (
 					<div>
 						<input onChange={e => this.executeSearch(client, e.target.value)} value={this.state.term}/>
 							<div>
@@ -61,16 +61,16 @@ class Search extends Component {
 }
 
 const playersSearch = gql`
-  query playersSearch($term: String) {
-    playersSearch(term: $term) {
+	query playersSearch($term: String) {
+		playersSearch(term: $term) {
 			players {
 				id
 				first_name
 				second_name
 				web_name
 			}
-    }
-  }
+		}
+	}
 `
 
 export default Search;

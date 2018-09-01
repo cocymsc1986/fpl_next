@@ -30,16 +30,16 @@ const TeamInfo = ({ data: { loading, error, team, playersByTeam }, id }) => {
 }
 
 const team = gql`
-  query team($id: Int) {
-    team(id: $id) {
+	query team($id: Int) {
+		team(id: $id) {
 			name
-    }
-  }
+		}
+	}
 `
 
 const playersByTeam = gql`
-  query playersByTeam($team: Int) {
-    playersByTeam(team: $team) {
+	query playersByTeam($team: Int) {
+		playersByTeam(team: $team) {
 			players {
 				id
 				element_type
@@ -51,8 +51,8 @@ const playersByTeam = gql`
 				now_cost
 				total_points
 			}
-    }
-  }
+		}
+	}
 `
 
 export default compose(
@@ -62,14 +62,14 @@ export default compose(
 				id: props.id,
 			}
 		}),
-    props: ({ data }) => ({ data }),
-  }),
-  graphql(playersByTeam, {
+		props: ({ data }) => ({ data }),
+	}),
+	graphql(playersByTeam, {
 		options: (props) => ({
 			variables: {
 				team: props.id,
 			}
 		}),
-    props: ({ data, ownProps: { data: newData } }) => ({ data: { ...data, ...newData } }),
-  }),
+		props: ({ data, ownProps: { data: newData } }) => ({ data: { ...data, ...newData } }),
+	}),
 )(TeamInfo);

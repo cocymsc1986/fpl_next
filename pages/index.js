@@ -8,10 +8,10 @@ import MostPopularContainer from '../components/MostPopularContainer';
 import Search from '../components/Search';
 
 export default withData(props => (
-  <Main>
-    Welcome to fantasy prem
-    <Search />
-    <MostPopularContainer />
-    <HighestRatedContainer />
-  </Main>
+	<Main>
+		Welcome to fantasy prem
+		<Search />
+		<MostPopularContainer />
+		<HighestRatedContainer />
+	</Main>
 ));
