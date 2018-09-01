@@ -1,21 +1,23 @@
 import React from 'react';
-import { graphql } from 'react-apollo'
-import gql from 'graphql-tag'
-import Link from 'next/link'
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
+import Link from 'next/link';
 
 const HighestRated = ({
-	data: { loading, error, playersByPropAndPos: { players } }, position
+	data: { loading, error, playersByPropAndPos }, position
 }) => {
 	if (loading) return "Loading..."
 	if (error) {
 		console.log(error)
 		return `Error loading highest rated ${position}s.`
 	}
+
+	const { players } = playersByPropAndPos;
 	return (
 		<div>
-			{players.map(player => {
+			{players && players.map((player, i) => {
 				return (
-					<ul>
+					<ul key={i}>
 						<Link href={{ pathname: '/player', query: { id: player.id } }}>
 							<li>{player.web_name}</li>
 						</Link>
