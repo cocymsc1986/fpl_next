@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 
-const TeamInfo = ({data: { loading, error, team, playersByTeam: { players } }, id}) => {
+const TeamInfo = ({ data: { loading, error, team, playersByTeam }, id }) => {
 	if (loading) return "Loading..."
 	if (error) {
 		console.log(error)
@@ -13,7 +13,7 @@ const TeamInfo = ({data: { loading, error, team, playersByTeam: { players } }, i
 		<div>
 			<img src={`https://platform-static-files.s3.amazonaws.com/premierleague/badges/t${id}.svg`} alt={`${team.name} logo`}/>
 			{ team.name }
-			{ players.map((player, key) => {
+			{ playersByTeam && playersByTeam.players.map((player, key) => {
 				return (
 					<div key={key}>
 						<div>{player.first_name} {player.web_name}</div>

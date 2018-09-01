@@ -13,9 +13,9 @@ const mostPopularValues = [
 
 const MostPopularContainer = () => {
 	return (
-		mostPopularValues.map(value => {
+		mostPopularValues.map((value, i) => {
 			return (
-				<MostPopular stat={value} />
+				<MostPopular key={i} stat={value} />
 			)
 		})
 	);
