@@ -4,7 +4,9 @@ import gql from 'graphql-tag';
 import Link from 'next/link';
 
 const Fixtures = ({
-	data: { loading, error, currentFixtures }
+	data: { loading, error, fixtures: FixtureData },
+	teamData: { teams },
+	loadNewFixtures
 }) => {
 	if (loading) return "Loading..."
 	if (error) {
@@ -12,8 +14,11 @@ const Fixtures = ({
 		return `Error loading fixtures.`
 	}
 
-	console.log(currentFixtures)
-	const { fixtures } = currentFixtures;
+	const getTeamName = id => {
+		return teams[id - 1].short_name
+	}
+
+	const { fixtures } = FixtureData;
 	return (
 		<div>
 			<ul>
@@ -27,17 +32,19 @@ const Fixtures = ({
 						kickoff_time_formatted
 					} = fixture;
 					return (
-						<li key={i}>{team_h} {started ? `${team_h_score} : ${team_a_score}` : `${kickoff_time_formatted}`} {team_a}</li>
+						<li key={i}>{getTeamName(team_h)} {started ? `${team_h_score} : ${team_a_score}` : `${kickoff_time_formatted}`} {getTeamName(team_a)}</li>
 					)
 				})}
 			</ul>
+			<button onClick={() => loadNewFixtures(FixtureData.id - 1)}>Previous</button>
+			<button onClick={() => loadNewFixtures(FixtureData.id + 1)}>Next</button>
 		</div>
 	)
 }
 
-const currentFixtures = gql`
-	query currentFixtures {
-		currentFixtures {
+const fixtures = gql`
+	query fixtures($id: Int) {
+		fixtures(id: $id) {
 			fixtures {
 				started
 				kickoff_time_formatted
@@ -46,12 +53,28 @@ const currentFixtures = gql`
 				team_a_score
 				team_h_score
 			}
+			id
 		}
 	}
 `
 
-export default graphql(currentFixtures, {
-	props: ({ data }) => ({
-		data
-	})
-})(Fixtures);
+export default graphql(fixtures, {
+  props: ({ data }) => ({
+    data,
+    loadNewFixtures: id => {
+      return data.fetchMore({
+        variables: {
+          id
+        },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (!fetchMoreResult) {
+            return previousResult
+          }
+          return Object.assign({}, {
+            fixtures: fetchMoreResult.fixtures
+          })
+        }
+      })
+    }
+  })
+})(Fixtures)
