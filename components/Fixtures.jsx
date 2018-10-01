@@ -3,6 +3,8 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Link from 'next/link';
 
+import Styles from '../styles/fixtures-styles';
+
 const Fixtures = ({
 	data: { loading, error, fixtures: FixtureData },
 	teamData: { teams },
@@ -18,10 +20,26 @@ const Fixtures = ({
 		return teams[id - 1].short_name
 	}
 
+	const getKOTime = date => {
+		const convertedDate = new Date(date);
+		const day = convertedDate.getDate();
+		const month = convertedDate.getMonth();
+		const hours = convertedDate.getHours();
+		const minutes = convertedDate.getMinutes();
+
+		return (
+			<div>
+				<div>{day}/{month}</div>
+				<div>{hours}:{minutes < 10 && '0'}{minutes}</div>
+			</div>
+		);
+	}
+
 	const { fixtures } = FixtureData;
 	return (
-		<div>
-			<ul>
+		<div className="c-fixtures">
+			<style jsx>{Styles}</style>
+			<ul className="c-fixtures__list">
 				{fixtures && fixtures.map((fixture, i) => {
 					const {
 						team_h,
@@ -29,15 +47,27 @@ const Fixtures = ({
 						team_h_score,
 						team_a_score,
 						started,
-						kickoff_time_formatted
+						kickoff_time
 					} = fixture;
 					return (
-						<li key={i}>{getTeamName(team_h)} {started ? `${team_h_score} : ${team_a_score}` : `${kickoff_time_formatted}`} {getTeamName(team_a)}</li>
+						<li className="c-fixtures__list-item" key={i}>
+							<div className="c-fixtures__home">
+								<Link href={{ pathname: '/team', query: { id: team_h } }}>
+									{getTeamName(team_h)}
+								</Link>
+							</div>
+							<div className="c-fixtures__game-status">{started ? `${team_h_score} : ${team_a_score}` : getKOTime(kickoff_time)}</div>
+							<div className="c-fixtures__away">
+								<Link href={{ pathname: '/team', query: { id: team_a } }}>
+									{getTeamName(team_a)}
+								</Link>
+							</div>
+						</li>
 					)
 				})}
 			</ul>
-			<button onClick={() => loadNewFixtures(FixtureData.id - 1)}>Previous</button>
-			<button onClick={() => loadNewFixtures(FixtureData.id + 1)}>Next</button>
+			<button className="c-fixtures__button" onClick={() => loadNewFixtures(FixtureData.id - 1)}>Previous</button>
+			<button className="c-fixtures__button" onClick={() => loadNewFixtures(FixtureData.id + 1)}>Next</button>
 		</div>
 	)
 }
@@ -48,6 +78,7 @@ const fixtures = gql`
 			fixtures {
 				started
 				kickoff_time_formatted
+				kickoff_time
 				team_a
 				team_h
 				team_a_score

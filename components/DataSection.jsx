@@ -29,6 +29,7 @@ const allTeams = gql`
 		allTeams {
 			teams {
 				id
+				code
 				name
 				short_name
 			}

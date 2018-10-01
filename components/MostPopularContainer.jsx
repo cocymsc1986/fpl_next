@@ -1,6 +1,7 @@
 import React from 'react';
 
 import MostPopular from './MostPopular';
+import Styles from '../styles/most-popular-styles';
 
 const mostPopularValues = [
 	'selected_by_percent',
@@ -13,11 +14,14 @@ const mostPopularValues = [
 
 const MostPopularContainer = () => {
 	return (
-		mostPopularValues.map((value, i) => {
-			return (
-				<MostPopular key={i} stat={value} />
-			)
-		})
+		<div className="c-most-popular">
+			<style jsx>{Styles}</style>
+			{mostPopularValues.map((value, i) => {
+				return (
+					<MostPopular key={i} block={i} stat={value} />
+				)
+			})}
+		</div>
 	);
 }
 

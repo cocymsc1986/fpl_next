@@ -3,8 +3,10 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Link from 'next/link';
 
+import Styles from '../styles/highest-rated-styles';
+
 const HighestRated = ({
-	data: { loading, error, playersByPropAndPos }, position
+	data: { loading, error, playersByPropAndPos }, position, teams
 }) => {
 	if (loading) return "Loading..."
 	if (error) {
@@ -12,23 +14,33 @@ const HighestRated = ({
 		return `Error loading highest rated ${position}s.`
 	}
 
+	const getTeamName = code => {
+		return teams.find(team => team.code === code).short_name
+	}
+
 	const { players } = playersByPropAndPos;
 	return (
-		<div>
-			{players && players.map((player, i) => {
-				return (
-					<ul key={i}>
-						<Link href={{ pathname: '/player', query: { id: player.id } }}>
-							<li>{player.web_name}</li>
-						</Link>
-						<Link href={{ pathname: '/team', query: { id: player.team_code } }}>
-							<li>{player.team_code}</li>
-						</Link>
-						<li>{player.now_cost}</li>
-						<li>{player.total_points}</li>
-					</ul>
-				)
-			})}
+		<div className="c-highest-rated__grid-item">
+			<style jsx>{Styles}</style>
+			<h3 className="c-highest-rated__title">{position}s</h3>
+			<ul className="c-highest-rated__list">
+				{players && players.map((player, i) => {
+					return (
+						<li key={i} className="c-highest-rated__list-item">
+							<div className="c-highest-rated__name">
+								<Link href={{ pathname: '/player', query: { id: player.id } }}>
+									<div>{player.web_name}</div>
+								</Link>
+								<Link href={{ pathname: '/team', query: { id: player.team_code } }}>
+									<div className="c-highest-rated__team">{getTeamName(player.team_code)}</div>
+								</Link>
+							</div>
+							<span className="c-highest-rated__cost">{player.now_cost / 10}</span>
+							<span className="c-highest-rated__points">{player.total_points}</span>
+						</li>
+					)
+				})}
+			</ul>
 		</div>
 	)
 }
