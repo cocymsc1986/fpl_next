@@ -1,15 +1,18 @@
 import React from 'react';
-import HighestRated from './HighestRated';
 
-const HighestRatedRow = () => {
+import HighestRated from './HighestRated';
+import Styles from '../styles/highest-rated-styles';
+
+const HighestRatedRow = ({ teamData: { teams } }) => {
 	return (
-		<div>
+		<div className="c-highest-rated">
+			<style jsx>{Styles}</style>
 			<h2>Top performers</h2>
-			<div>
-				<HighestRated position='goalkeeper' />
-				<HighestRated position='defender' />
-				<HighestRated position='midfielder' />
-				<HighestRated position='forward' />
+			<div className="c-highest-rated__grid">
+				<HighestRated position='goalkeeper' teams={teams} />
+				<HighestRated position='defender' teams={teams} />
+				<HighestRated position='midfielder' teams={teams} />
+				<HighestRated position='forward' teams={teams} />
 			</div>
 		</div>
 	);
