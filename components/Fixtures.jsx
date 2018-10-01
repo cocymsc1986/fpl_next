@@ -22,7 +22,6 @@ const Fixtures = ({
 
 	const getKOTime = date => {
 		const convertedDate = new Date(date);
-		console.log(convertedDate.getDate())
 		const day = convertedDate.getDate();
 		const month = convertedDate.getMonth();
 		const hours = convertedDate.getHours();
