@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 
 import HighestRatedContainer from '../components/HighestRatedContainer';
 import MostPopularContainer from '../components/MostPopularContainer';
-import Fixtures from '../components/Fixtures';
+import FixturesAndResults from '../components/FixturesAndResults';
 
 const DataSection = ({
 	data: { loading, error, allTeams }
@@ -19,7 +19,7 @@ const DataSection = ({
 		<Fragment>
 			<MostPopularContainer teamData={allTeams} />
 			<HighestRatedContainer teamData={allTeams} />
-			<Fixtures teamData={allTeams} />
+			<FixturesAndResults teamData={allTeams} />
 		</Fragment>
 	)	
 }

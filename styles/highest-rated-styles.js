@@ -3,14 +3,19 @@ import css from 'styled-jsx/css';
 import theme from './theme';
 
 export default css`
+	h2 {
+		margin: 0 0 ${theme.spacing}
+	}
+
 	.c-highest-rated {
+		max-width: ${theme.maxWidth};
 		padding: ${theme.spacing};
+		margin: 0 auto ${theme.spacing};
 	}
 
 	.c-highest-rated__grid {
 		display: flex;
 		flex-flow: wrap;
-		margin: ${theme.spacing} 0;
 	}
 
 	.c-highest-rated__grid h3 {

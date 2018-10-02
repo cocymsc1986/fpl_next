@@ -17,7 +17,7 @@ const Fixtures = ({
 	}
 
 	const getTeamName = id => {
-		return teams[id - 1].short_name
+		return teams[id - 1].name
 	}
 
 	const getKOTime = date => {
@@ -29,8 +29,9 @@ const Fixtures = ({
 
 		return (
 			<div>
+				<style jsx>{Styles}</style>
 				<div>{day}/{month}</div>
-				<div>{hours}:{minutes < 10 && '0'}{minutes}</div>
+				<div className="c-fixtures__ko-time">{hours}:{minutes < 10 && '0'}{minutes}</div>
 			</div>
 		);
 	}
@@ -53,21 +54,25 @@ const Fixtures = ({
 						<li className="c-fixtures__list-item" key={i}>
 							<div className="c-fixtures__home">
 								<Link href={{ pathname: '/team', query: { id: team_h } }}>
-									{getTeamName(team_h)}
+									<a>
+										{getTeamName(team_h)}
+									</a>
 								</Link>
 							</div>
-							<div className="c-fixtures__game-status">{started ? `${team_h_score} : ${team_a_score}` : getKOTime(kickoff_time)}</div>
+							<div className="c-fixtures__game-status">{started ? <span className="c-fixtures__score">{team_h_score} : {team_a_score}</span> : getKOTime(kickoff_time)}</div>
 							<div className="c-fixtures__away">
 								<Link href={{ pathname: '/team', query: { id: team_a } }}>
-									{getTeamName(team_a)}
+									<a>
+										{getTeamName(team_a)}
+									</a>
 								</Link>
 							</div>
 						</li>
 					)
 				})}
 			</ul>
-			<button className="c-fixtures__button" onClick={() => loadNewFixtures(FixtureData.id - 1)}>Previous</button>
-			<button className="c-fixtures__button" onClick={() => loadNewFixtures(FixtureData.id + 1)}>Next</button>
+			<button className="c-fixtures__button" onClick={() => loadNewFixtures(FixtureData.id - 1)}>Previous Week</button>
+			<button className="c-fixtures__button" onClick={() => loadNewFixtures(FixtureData.id + 1)}>Next Week</button>
 		</div>
 	)
 }

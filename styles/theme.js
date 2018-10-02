@@ -19,6 +19,7 @@ export default {
   font: {
     familyDefault: 'Raleway',
     size: {
+      small: '12px',
       body: '16px',
       bodyValue: 16,
       header: '2.5rem',

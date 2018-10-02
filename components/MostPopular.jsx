@@ -6,13 +6,15 @@ import Link from 'next/link';
 import Styles from '../styles/most-popular-styles';
 
 const MostPopular = ({
-	data: { loading, error, playerWithHighestProp: { player } }, stat
+	data: { loading, error, playerWithHighestProp }, stat
 }) => {
 	if (loading) return "Loading..."
 	if (error) {
 		console.log(error)
 		return "Error loading most popular players."
 	}
+
+	const { player } = playerWithHighestProp;
 
 	return (
 		<div className="c-most-popular__block">
@@ -26,7 +28,10 @@ const MostPopular = ({
 						</a>
 					</Link>
 				</h2>
-				<h3>{player[stat]}</h3>
+				<h3 className="c-most-popular__value">{player[stat]}</h3>
+				<div className="c-most-popular__image-container">
+					<img className="c-most-popular__image" src={`https://platform-static-files.s3.amazonaws.com/premierleague/photos/players/110x140/p${player.code}.png`} alt={player.web_name}/>
+				</div>
 			</div>
 		</div>
 	)	
@@ -37,6 +42,7 @@ const playerWithHighestProp = gql`
 		playerWithHighestProp(prop: $prop) {
 			player {
 				id
+				code
 				web_name
 				selected_by_percent
 				total_points
