@@ -40,20 +40,22 @@ class Search extends Component {
 				{client => (
 					<div className="c-search">
 						<style jsx>{Styles}</style>
-						<input className="c-search__input" placeholder="Search for a player" onChange={e => this.executeSearch(client, e.target.value)} value={this.state.term}/>
-						{searchableData && (
-							<ul className="c-search__results-list">
-								{searchableData.length ? searchableData.map((player, i) => {
-									return (
-										<Fragment key={i}>
-											<Link href={{ pathname: '/player', query: { id: player.id } }}>
-												<li className="c-search__result">{player.first_name} {player.second_name}</li>
-											</Link>
-										</Fragment>
-									)
-								}) : 'No results'}
-							</ul>
-						)}
+						<div className="c-search__wrapper">
+							<input className="c-search__input" placeholder="Search for a player..." onChange={e => this.executeSearch(client, e.target.value)} value={this.state.term}/>
+							{searchableData && (
+								<ul className="c-search__results-list">
+									{searchableData.length ? searchableData.map((player, i) => {
+										return (
+											<Fragment key={i}>
+												<Link href={{ pathname: '/player', query: { id: player.id } }}>
+													<li className="c-search__result">{player.first_name} {player.second_name}</li>
+												</Link>
+											</Fragment>
+										)
+									}) : 'No results'}
+								</ul>
+							)}
+						</div>	
 					</div>
 				)}
 			</ApolloConsumer>
