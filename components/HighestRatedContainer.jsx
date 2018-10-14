@@ -3,7 +3,9 @@ import React from 'react';
 import HighestRated from './HighestRated';
 import Styles from '../styles/highest-rated-styles';
 
-const HighestRatedRow = ({ teamData: { teams } }) => {
+const HighestRatedRow = ({ teamData }) => {
+	const { teams } = teamData;
+
 	return (
 		<div className="c-highest-rated">
 			<style jsx>{Styles}</style>

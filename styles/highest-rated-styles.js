@@ -10,7 +10,7 @@ export default css`
 	.c-highest-rated {
 		max-width: ${theme.maxWidth};
 		padding: ${theme.spacing};
-		margin: 0 auto ${theme.spacing};
+		margin: 0 auto;
 	}
 
 	.c-highest-rated__grid {
@@ -46,10 +46,11 @@ export default css`
 
 	.c-highest-rated__list-item {
 		display: flex;
-		margin-bottom: 2px;
+		margin-bottom: 4px;
 	}
 
 	.c-highest-rated__name {
+		font-weight: bold;
 		width: 60%;
 		cursor: pointer;
 	}
@@ -59,7 +60,8 @@ export default css`
 	}
 
 	.c-highest-rated__team {
-		font-weight: bold;
+		font-weight: normal;
+		font-size: 14px;
 		cursor: pointer;
 	}
 

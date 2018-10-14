@@ -2,6 +2,7 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Link from 'next/link';
+import { getTeamName } from '../utils/team';
 
 import Styles from '../styles/fixtures-styles';
 
@@ -14,10 +15,6 @@ const Fixtures = ({
 	if (error) {
 		console.log(error)
 		return `Error loading fixtures.`
-	}
-
-	const getTeamName = id => {
-		return teams[id - 1].name
 	}
 
 	const getKOTime = date => {
@@ -41,6 +38,7 @@ const Fixtures = ({
 		<div className="c-fixtures">
 			<style jsx>{Styles}</style>
 			<ul className="c-fixtures__list">
+				<h4 className="c-fixtures__header">Gameweek {FixtureData.id}</h4>
 				{fixtures && fixtures.map((fixture, i) => {
 					const {
 						team_h,
@@ -55,7 +53,7 @@ const Fixtures = ({
 							<div className="c-fixtures__home">
 								<Link href={{ pathname: '/team', query: { id: team_h } }}>
 									<a>
-										{getTeamName(team_h)}
+										{getTeamName(teams, team_h)}
 									</a>
 								</Link>
 							</div>
@@ -63,7 +61,7 @@ const Fixtures = ({
 							<div className="c-fixtures__away">
 								<Link href={{ pathname: '/team', query: { id: team_a } }}>
 									<a>
-										{getTeamName(team_a)}
+										{getTeamName(teams, team_a)}
 									</a>
 								</Link>
 							</div>

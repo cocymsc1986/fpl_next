@@ -13,13 +13,16 @@ export default css`
 		text-decoration: underline;
 	}
 
-	.c-fixtures {
-		display: inline-block;
-		background: ${theme.colours.greyDarkest};
+	.c-fixtures__header {
+		text-align: center;
+		color: white;
+		margin-top: 0;
 	}
 
 	.c-fixtures__list {
-		padding: ${theme.spacingValue / 2}px ${theme.spacing};
+		background: ${theme.colours.greyDarkest};
+		/* Specific width for height calc */
+		padding: 23px ${theme.spacing};
 		margin: 0;
 		list-style-type: none;
 	}
