@@ -8,7 +8,7 @@ import Styles from '../styles/most-popular-styles';
 const MostPopular = ({
 	data: { loading, error, playerWithHighestProp }, stat
 }) => {
-	if (loading) return "Loading..."
+	if (!playerWithHighestProp || loading) return "Loading..."
 	if (error) {
 		console.log(error)
 		return "Error loading most popular players."
