@@ -33,14 +33,14 @@ export default css`
 	}
 
 	.c-fixtures__home {
-		width: 120px;
+		flex: 1;
 		padding: 4px;
 		text-align: right;
 		margin-right: ${theme.spacingSmall};
 	}
 
 	.c-fixtures__away {
-		width: 120px;
+		flex: 1;
 		padding: 4px;
 		margin-left: ${theme.spacingSmall};
 	}
@@ -59,7 +59,7 @@ export default css`
 	}
 
 	.c-fixtures__ko-time {
-		font-size: ${theme.font.size.small};
+		font-size: ${theme.font.size.xsmall};
 	}
 
 	.c-fixtures__button {
@@ -75,5 +75,11 @@ export default css`
 	.c-fixtures__button:hover {
 		background: ${theme.colours.greyDarkest};
 		color: white;
+	}
+
+	@media (min-width: ${theme.breakpoints.medium}) {
+		.c-fixtures__wrapper {
+			margin-right: ${theme.spacing};
+		}
 	}
 `;
