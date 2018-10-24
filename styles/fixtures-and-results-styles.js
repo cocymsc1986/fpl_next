@@ -15,5 +15,6 @@ export default css`
 
 	.c-fixtures-and-results__body {
 		display: flex;
+		flex-flow: wrap;
 	}
 `;

@@ -19,7 +19,8 @@ export default {
   font: {
     familyDefault: 'Raleway',
     size: {
-      small: '12px',
+      xsmall: '12px',
+      small: '14px',
       body: '16px',
       bodyValue: 16,
       header: '2.5rem',
@@ -33,6 +34,7 @@ export default {
   breakpoints: {
     small: '480px',
     medium: '767px',
-    large: '1024px'
+    large: '820px',
+    xlarge: '1024px'
   }
 };

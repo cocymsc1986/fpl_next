@@ -37,40 +37,42 @@ const Fixtures = ({
 	return (
 		<div className="c-fixtures">
 			<style jsx>{Styles}</style>
-			<ul className="c-fixtures__list">
-				<h4 className="c-fixtures__header">Gameweek {FixtureData.id}</h4>
-				{fixtures && fixtures.map((fixture, i) => {
-					const {
-						team_h,
-						team_a,
-						team_h_score,
-						team_a_score,
-						started,
-						kickoff_time
-					} = fixture;
-					return (
-						<li className="c-fixtures__list-item" key={i}>
-							<div className="c-fixtures__home">
-								<Link href={{ pathname: '/team', query: { id: team_h } }}>
-									<a>
-										{getTeamName(teams, team_h)}
-									</a>
-								</Link>
-							</div>
-							<div className="c-fixtures__game-status">{started ? <span className="c-fixtures__score">{team_h_score} : {team_a_score}</span> : getKOTime(kickoff_time)}</div>
-							<div className="c-fixtures__away">
-								<Link href={{ pathname: '/team', query: { id: team_a } }}>
-									<a>
-										{getTeamName(teams, team_a)}
-									</a>
-								</Link>
-							</div>
-						</li>
-					)
-				})}
-			</ul>
-			<button className="c-fixtures__button" onClick={() => loadNewFixtures(FixtureData.id - 1)}>Previous Week</button>
-			<button className="c-fixtures__button" onClick={() => loadNewFixtures(FixtureData.id + 1)}>Next Week</button>
+			<div className="c-fixtures__wrapper">
+				<ul className="c-fixtures__list">
+					<h4 className="c-fixtures__header">Gameweek {FixtureData.id}</h4>
+					{fixtures && fixtures.map((fixture, i) => {
+						const {
+							team_h,
+							team_a,
+							team_h_score,
+							team_a_score,
+							started,
+							kickoff_time
+						} = fixture;
+						return (
+							<li className="c-fixtures__list-item" key={i}>
+								<div className="c-fixtures__home">
+									<Link href={{ pathname: '/team', query: { id: team_h } }}>
+										<a>
+											{getTeamName(teams, team_h)}
+										</a>
+									</Link>
+								</div>
+								<div className="c-fixtures__game-status">{started ? <span className="c-fixtures__score">{team_h_score} : {team_a_score}</span> : getKOTime(kickoff_time)}</div>
+								<div className="c-fixtures__away">
+									<Link href={{ pathname: '/team', query: { id: team_a } }}>
+										<a>
+											{getTeamName(teams, team_a)}
+										</a>
+									</Link>
+								</div>
+							</li>
+						)
+					})}
+				</ul>
+				<button className="c-fixtures__button" onClick={() => loadNewFixtures(FixtureData.id - 1)}>Previous Week</button>
+				<button className="c-fixtures__button" onClick={() => loadNewFixtures(FixtureData.id + 1)}>Next Week</button>
+			</div>
 		</div>
 	)
 }

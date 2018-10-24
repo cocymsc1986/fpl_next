@@ -61,7 +61,7 @@ export default css`
 
 	.c-highest-rated__team {
 		font-weight: normal;
-		font-size: 14px;
+		font-size: ${theme.font.size.small};
 		cursor: pointer;
 	}
 

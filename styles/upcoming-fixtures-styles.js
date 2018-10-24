@@ -4,8 +4,8 @@ import theme from './theme';
 
 export default css`
 	.c-upcoming-fixtures {
-		width: 60%;
-		margin-left: ${theme.spacingValue * 2}px;
+		width: 100%;
+		margin-top: ${theme.spacing};
 	}
 
 	.c-upcoming-fixtures__header:first-child {
@@ -24,11 +24,11 @@ export default css`
 
 	.c-upcoming-fixtures__table td {
 		border-bottom: 2px solid ${theme.colours.greyDarkest};
-		padding: ${theme.spacingValue / 2}px ${theme.spacing};
+		padding: ${theme.spacingValue / 2}px;
 	}
 
 	.c-upcoming-fixtures__table td p {
-		font-size: 14px;
+		font-size: ${theme.font.size.xsmall};
 		margin: 0;
 		text-align: center;
 	}
@@ -39,5 +39,28 @@ export default css`
 
 	.c-upcoming-fixtures__team {
 		border-right: 2px solid ${theme.colours.greyDarkest};
+		font-size: ${theme.font.size.small};
+	}
+
+	@media (min-width: ${theme.breakpoints.small}) {
+
+	}
+
+	@media (min-width: ${theme.breakpoints.medium}) {
+		.c-upcoming-fixtures {
+			width: auto;
+			flex-grow: 1;
+			margin-top: 0;
+		}
+	}
+
+	@media (min-width: ${theme.breakpoints.large}) {
+		.c-upcoming-fixtures__table td p {
+			font-size: ${theme.font.size.small};
+		}
+
+		.c-upcoming-fixtures__team {
+			font-size: 16px;
+		}
 	}
 `;

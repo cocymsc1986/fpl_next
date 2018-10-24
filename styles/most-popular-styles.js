@@ -86,7 +86,7 @@ export default css`
 		}
 	}
 
-	@media (min-width: ${theme.breakpoints.large}) {
+	@media (min-width: ${theme.breakpoints.xlarge}) {
 		.c-most-popular__image-container {
 			display: block;
 		}
