@@ -13,6 +13,10 @@ export default css`
 		text-decoration: underline;
 	}
 
+	.c-fixtures {
+		width: 100%;
+	}
+
 	.c-fixtures__header {
 		text-align: center;
 		color: white;
@@ -80,6 +84,10 @@ export default css`
 	@media (min-width: ${theme.breakpoints.medium}) {
 		.c-fixtures__wrapper {
 			margin-right: ${theme.spacing};
+		}
+
+		.c-fixtures {
+			width: auto;
 		}
 	}
 `;
