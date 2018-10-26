@@ -14,8 +14,8 @@ const HighestRated = ({
 		return `Error loading highest rated ${position}s.`
 	}
 
-	const getTeamName = code => {
-		return teams.find(team => team.code === code).short_name
+	const getTeamName = id => {
+		return teams.find(team => team.id === id).short_name
 	}
 
 	const { players } = playersByPropAndPos;
@@ -31,8 +31,8 @@ const HighestRated = ({
 								<Link href={{ pathname: '/player', query: { id: player.id } }}>
 									<div>{player.web_name}</div>
 								</Link>
-								<Link href={{ pathname: '/team', query: { id: player.team_code } }}>
-									<div className="c-highest-rated__team">{getTeamName(player.team_code)}</div>
+								<Link href={{ pathname: '/team', query: { id: player.team }}}>
+									<div className="c-highest-rated__team">{getTeamName(player.team)}</div>
 								</Link>
 							</div>
 							<span className="c-highest-rated__cost">{player.now_cost / 10}</span>
@@ -51,7 +51,7 @@ const playersByPropAndPos = gql`
 			players {
 				id
 				web_name
-				team_code
+				team
 				now_cost
 				total_points
 			}

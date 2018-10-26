@@ -7,13 +7,15 @@ import { getTeamName, getTeamShortName } from '../utils/team';
 
 const UpcomingFixtures = ({ 
 	teamData,
-	data: { loading, error, getAllTeamsFixtures: { fixtures } }
+	data: { loading, error, getAllTeamsFixtures }
 }) => {
 	if (loading) return "Loading..."
 	if (error) {
 		console.log(error)
 		return `Error loading fixtures.`
 	}
+
+	const { fixtures } = getAllTeamsFixtures; 
 
 	const getEasiestFixtures = (amountOfFixtures = 5, amountOfTeams = 5) => {
 		const teamFixtureDifficulty = fixtures.map((team, i) => {

@@ -2,16 +2,16 @@ import React from 'react';
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 
-const TeamInfo = ({ data: { loading, error, team, playersByTeam }, id }) => {
+const TeamInfo = ({ data: { loading, error, team, playersByTeam } }) => {
 	if (loading) return "Loading..."
-	if (error) {
+	if (error || !team) {
 		console.log(error)
 		return "Error loading team data."
 	}
 
 	return (
 		<div>
-			<img src={`https://platform-static-files.s3.amazonaws.com/premierleague/badges/t${id}.svg`} alt={`${team.name} logo`}/>
+			<img src={`https://platform-static-files.s3.amazonaws.com/premierleague/badges/t${team.code}.svg`} alt={`${team.name} logo`}/>
 			{ team.name }
 			{ playersByTeam && playersByTeam.players.map((player, key) => {
 				return (
@@ -33,6 +33,7 @@ const team = gql`
 	query team($id: Int) {
 		team(id: $id) {
 			name
+			code
 		}
 	}
 `
