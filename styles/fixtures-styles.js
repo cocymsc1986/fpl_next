@@ -83,7 +83,7 @@ export default css`
 
 	@media (min-width: ${theme.breakpoints.medium}) {
 		.c-fixtures__wrapper {
-			margin-right: ${theme.spacing};
+			margin-right: ${theme.spacingValue * 2}px;
 		}
 
 		.c-fixtures {
