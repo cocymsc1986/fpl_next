@@ -33,8 +33,8 @@ export default {
   },
   breakpoints: {
     small: '480px',
-    medium: '767px',
-    large: '820px',
+    medium: '780px',
+    large: '830px',
     xlarge: '1024px'
   }
 };

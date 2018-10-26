@@ -42,10 +42,6 @@ export default css`
 		font-size: ${theme.font.size.small};
 	}
 
-	@media (min-width: ${theme.breakpoints.small}) {
-
-	}
-
 	@media (min-width: ${theme.breakpoints.medium}) {
 		.c-upcoming-fixtures {
 			width: auto;
