@@ -6,8 +6,8 @@ export default () => {
 	return (
 		<Fragment>
 			<style jsx>{Styles}</style>
-			<footer className="footer">
-				<div className="footer__container">
+			<footer className="c-footer">
+				<div className="c-footer__container">
 					<div>Fantasy Prem</div>
 					<div>MSC Software Development Ltd</div>
 				</div>
