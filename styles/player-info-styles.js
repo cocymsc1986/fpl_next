@@ -37,6 +37,26 @@ export default css`
 		margin: 0;
 	}
 
+	.c-player__body {
+		max-width: ${theme.maxWidth};
+		margin: 0 auto;
+	}
+
+	.c-player__body-list {
+		list-style-type: none;
+		margin-left: ${theme.spacing};
+		padding: 0;
+	}
+
+	.c-player__body-list li {
+		margin-bottom: 4px;
+	}
+
+	.c-player__body-list span {
+		font-size: 18px;
+		font-weight: bold;
+	}
+
 	@media (min-width: ${theme.breakpoints.medium}) {
 		.c-player__header-team {
 			height: 100px;
