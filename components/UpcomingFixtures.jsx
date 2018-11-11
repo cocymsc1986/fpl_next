@@ -2,6 +2,8 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
+import Link from 'next/link';
+
 import Styles from '../styles/upcoming-fixtures-styles';
 import { getTeamName, getTeamShortName } from '../utils/team';
 
@@ -57,7 +59,13 @@ const UpcomingFixtures = ({
 					{getEasiestFixtures().map((teamInfo, i) => {
 						return (
 							<tr key={i}>
-								<td className="c-upcoming-fixtures__team">{getTeamName(teams, teamInfo.team)}</td>
+								<td className="c-upcoming-fixtures__team">
+									<Link href={{ pathname: '/team', query: { id: teamInfo.team }}}>
+										<a>
+											{getTeamName(teams, teamInfo.team)}
+										</a>
+									</Link>
+								</td>
 								{teamInfo.fixtures.map((fixture, j) => {
 									return (
 										<td className="c-upcoming-fixtures__fixture" key={j}>
@@ -78,7 +86,13 @@ const UpcomingFixtures = ({
 					{getEasiestFixtures(3, 5).map((teamInfo, i) => {
 						return (
 							<tr key={i}>
-								<td className="c-upcoming-fixtures__team">{getTeamName(teams, teamInfo.team)}</td>
+								<td className="c-upcoming-fixtures__team">
+									<Link href={{ pathname: '/team', query: { id: teamInfo.team }}}>
+										<a>
+											{getTeamName(teams, teamInfo.team)}
+										</a>
+									</Link>
+								</td>
 								{teamInfo.fixtures.map((fixture, j) => {
 									return (
 										<td className="c-upcoming-fixtures__fixture" key={j}>

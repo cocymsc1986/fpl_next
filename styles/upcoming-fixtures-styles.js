@@ -3,6 +3,16 @@ import css from 'styled-jsx/css';
 import theme from './theme';
 
 export default css`
+	a,
+	a:visited {
+		color: ${theme.colours.greyDarkest};
+		text-decoration: none;
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+
 	.c-upcoming-fixtures {
 		width: 100%;
 		margin-top: ${theme.spacing};
