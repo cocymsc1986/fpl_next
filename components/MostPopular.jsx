@@ -14,13 +14,22 @@ const MostPopular = ({
 		return "Error loading most popular players."
 	}
 
+	const statMap = {
+		selected_by_percent: 'Most Selected',
+		total_points: 'Total Points',
+		transfers_in_event: 'Most In This Week',
+		transfers_out_event: 'Most Out This Week',
+		form: 'Form',
+		value_form: 'Best Value'
+	}
+
 	const { player } = playerWithHighestProp;
 
 	return (
 		<div className="c-most-popular__block">
 			<style jsx>{Styles}</style>
 			<div className="c-most-popular__block-content">
-				<h3>{stat}</h3>
+				<h3>{statMap[stat]}</h3>
 				<h2>
 					<Link href={{ pathname: '/player', query: { id: player.id } }}>
 						<a>

@@ -1,6 +1,9 @@
 import React from 'react';
-import { graphql, compose } from 'react-apollo'
-import gql from 'graphql-tag'
+import { graphql, compose } from 'react-apollo';
+import gql from 'graphql-tag';
+import Link from 'next/link';
+
+import Styles from '../styles/team-styles';
 
 const TeamInfo = ({ data: { loading, error, team, playersByTeam } }) => {
 	if (loading) return "Loading..."
@@ -10,21 +13,62 @@ const TeamInfo = ({ data: { loading, error, team, playersByTeam } }) => {
 	}
 
 	return (
-		<div>
-			<img src={`https://platform-static-files.s3.amazonaws.com/premierleague/badges/t${team.code}.svg`} alt={`${team.name} logo`}/>
-			{ team.name }
-			{ playersByTeam && playersByTeam.players.map((player, key) => {
-				return (
-					<div key={key}>
-						<div>{player.first_name} {player.web_name}</div>
-						<div>{player.form}</div>
-						<div>{player.status}</div>
-						<div>{player.points_per_game}</div>
-						<div>{player.now_cost}</div>
-						<div>{player.total_points}</div>
-					</div>
-				);
-			})}
+		<div className="c-team">
+			<style jsx>{Styles}</style>
+			<div className="c-team__header">
+				<div className="c-team__header-container">
+					<div className="c-team__badge"><img src={`https://platform-static-files.s3.amazonaws.com/premierleague/badges/t${team.code}.svg`} alt={`${team.name} logo`}/></div>
+					<h1 className="c-team__name">
+						{ team.name }
+					</h1>
+				</div>
+			</div>
+			<div className="c-team__data">
+				<div className="c-team__container">
+					<table>
+						<thead>
+							<tr>
+								<th>
+									Name
+								</th>
+								<th>
+									Form
+								</th>
+								<th>
+									Status
+								</th>
+								<th>
+									PPG
+								</th>
+								<th>
+									Cost
+								</th>
+								<th>
+									Points
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{ playersByTeam && playersByTeam.players.map((player, key) => {
+								return (
+									<tr className="c-team__player-info" key={key}>
+										<td>
+											<Link href={{ pathname: '/player', query: { id: player.id } }}>
+												<a className="c-team__player-link">{player.first_name} {player.web_name}</a>
+											</Link>
+										</td>
+										<td>{player.form}</td>
+										<td>{player.status}</td>
+										<td>{player.points_per_game}</td>
+										<td>{player.now_cost / 10}</td>
+										<td>{player.total_points}</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	)	
 }

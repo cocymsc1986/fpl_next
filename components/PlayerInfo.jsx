@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import Link from 'next/link';
 
 import Styles from '../styles/player-info-styles';
 
@@ -47,6 +48,7 @@ const PlayerInfo = ({
 		status,
 		chance_of_playing_this_round,
 		points_per_game,
+		team
 	} = player;
 
 	const keeper = element_type === 1;
@@ -75,7 +77,11 @@ const PlayerInfo = ({
 								<p>Assists: <span className="c-player__header-values">{ assists }</span></p>
 							</Fragment>
 						}
-						<img className="c-player__header-team" src={`https://platform-static-files.s3.amazonaws.com/premierleague/badges/t${team_code}.svg`} alt='team logo' />
+						<Link href={{ pathname: '/team', query: { id: team }}}>
+							<a>
+								<img className="c-player__header-team" src={`https://platform-static-files.s3.amazonaws.com/premierleague/badges/t${team_code}.svg`} alt='team logo' />
+							</a>
+						</Link>
 					</div>
 				</div>
 			</header>
@@ -207,6 +213,7 @@ const player = gql`
 			status
 			chance_of_playing_this_round
 			points_per_game
+			team
 		}
 	}
 `
