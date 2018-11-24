@@ -23,6 +23,9 @@ export default css`
 	}
 
 	.c-upcoming-fixtures__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		margin-bottom: ${theme.spacingValue / 2}px;
 	}
 
@@ -50,6 +53,16 @@ export default css`
 	.c-upcoming-fixtures__team {
 		border-right: 2px solid ${theme.colours.greyDarkest};
 		font-size: ${theme.font.size.small};
+	}
+
+	.c-upcoming-fixtures__switch {
+		display: inline-block;
+    padding: ${theme.spacingValue / 4}px ${theme.spacingValue}px;
+    background: ${theme.colours.blueDark};
+    color: white;
+		margin: ${theme.spacingValue / 2}px 0 0 ${theme.spacing};
+		border-radius: 3px;
+		cursor: pointer;
 	}
 
 	@media (min-width: ${theme.breakpoints.medium}) {

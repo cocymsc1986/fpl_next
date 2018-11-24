@@ -26,7 +26,7 @@ export default css`
 	.c-fixtures__list {
 		background: ${theme.colours.greyDarkest};
 		/* Specific width for height calc */
-		padding: 23px ${theme.spacing};
+		padding-bottom: ${theme.spacing};
 		margin: 0;
 		list-style-type: none;
 		width: 100%;
