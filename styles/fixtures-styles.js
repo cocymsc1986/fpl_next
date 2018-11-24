@@ -29,29 +29,25 @@ export default css`
 		padding: 23px ${theme.spacing};
 		margin: 0;
 		list-style-type: none;
+		width: 100%;
 	}
 
 	.c-fixtures__list-item {
-		display: flex;
 		height: 42px;
 	}
 
 	.c-fixtures__home {
-		flex: 1;
 		padding: 4px;
 		text-align: right;
 		margin-right: ${theme.spacingSmall};
 	}
 
 	.c-fixtures__away {
-		flex: 1;
 		padding: 4px;
 		margin-left: ${theme.spacingSmall};
 	}
 
 	.c-fixtures__game-status {
-		display: inline-block;
-		width: 50px;
 		padding: 0 4px 4px;
 		background: ${theme.colours.greyDarkest};
 		color: white;
