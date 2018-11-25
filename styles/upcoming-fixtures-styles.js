@@ -58,7 +58,7 @@ export default css`
 	.c-upcoming-fixtures__switch {
 		font-size: ${theme.font.size.body};
 		display: inline-block;
-    padding: ${theme.spacingValue / 4}px ${theme.spacingValue}px;
+    padding: ${theme.spacingValue / 4}px ${theme.spacingValue / 2}px;
     background: ${theme.colours.blueDark};
     color: white;
 		margin: ${theme.spacingValue / 2}px 0 ${theme.spacingValue / 2}px ${theme.spacing};
