@@ -3,6 +3,8 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Link from 'next/link';
 
+import TeamFixtures from './TeamFixtures';
+
 import Styles from '../styles/player-info-styles';
 
 const PlayerInfo = ({
@@ -85,6 +87,7 @@ const PlayerInfo = ({
 					</div>
 				</div>
 			</header>
+			<TeamFixtures id={team} />
 			<div className="c-player__body">
 				<ul className="c-player__body-list">
 					<li>

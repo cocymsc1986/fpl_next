@@ -79,11 +79,17 @@ export default css`
 
 	@media (min-width: ${theme.breakpoints.medium}) {
 		.c-fixtures__wrapper {
-			margin-right: ${theme.spacingValue * 2}px;
+			margin-right: ${theme.spacing};
 		}
 
 		.c-fixtures {
-			width: auto;
+			width: 40%;
+		}
+	}
+
+	@media (min-width: ${theme.breakpoints.large}) {
+		.c-fixtures__wrapper {
+			margin-right: ${theme.spacingValue * 2}px;
 		}
 	}
 `;

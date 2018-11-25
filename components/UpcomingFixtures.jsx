@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import Link from 'next/link';
 
 import Styles from '../styles/upcoming-fixtures-styles';
-import { getTeamName, getTeamShortName } from '../utils/team';
+import { getTeamName, getTeamShortName, getTeamsFixturesAndDifficulties } from '../utils/team';
 
 class UpcomingFixtures extends Component {
 	constructor(props) {
@@ -16,22 +16,13 @@ class UpcomingFixtures extends Component {
 		}
 	}
 
-	getFixturesByDifficulty(amountOfFixtures = 5, amountOfTeams = 5, difficultyType = 'easiest') {
+	getFixturesByDifficulty(amountOfFixtures = 5, amountOfTeams = 5) {
 		const { fixtures } = this.props.data.getAllTeamsFixtures; 
+		const { difficultyType } = this.state;
 
-		const teamFixtureDifficulty = fixtures.map((team, i) => {
-			let difficulty = { team: i + 1, fixtures: [] }
-
-			for (let j = 0; j < amountOfFixtures; j++) {
-				if (team[j].team_h === i + 1) {
-					difficulty.fixtures.push({ team: team[j].team_a, difficulty: team[j].team_h_difficulty, venue: 'h'});
-				} else {
-					difficulty.fixtures.push({ team: team[j].team_h, difficulty: team[j].team_a_difficulty, venue: 'a' });
-				}
-			}
-
-			return difficulty;
-		});
+		const teamFixtureDifficulty = fixtures.map((team, i) => (
+			getTeamsFixturesAndDifficulties(team, i + 1, amountOfFixtures)
+		));
 
 		const fixtureAverages = teamFixtureDifficulty.sort((a, b) => {
 			const sortA = a.fixtures.reduce((previous, current) => {
@@ -48,7 +39,7 @@ class UpcomingFixtures extends Component {
 			return fixtureAverages.slice(0, amountOfTeams);
 		}
 
-		return fixtureAverages.slice(fixtureAverages.length - amountOfTeams, fixtureAverages.length);
+		return fixtureAverages.slice(fixtureAverages.length - amountOfTeams, fixtureAverages.length).reverse();
 	};
 
 	updateDifficultyType() {
@@ -61,7 +52,7 @@ class UpcomingFixtures extends Component {
 		const { data: { loading, error }, teamData: { teams } } = this.props;
 		const { difficultyType } = this.state;
 
-		if (loading) {
+		if (loading || !teams) {
 			return (
 				<div>Loading...</div>
 			)
@@ -81,7 +72,7 @@ class UpcomingFixtures extends Component {
 				<h3 className="c-upcoming-fixtures__header"><span>{titleDifficulty} Upcoming Fixtures (Next 5)</span><span className="c-upcoming-fixtures__switch" onClick={() => this.updateDifficultyType()}>{buttonText}</span></h3>
 				<table className="c-upcoming-fixtures__table">
 					<tbody>
-						{this.getFixturesByDifficulty(5, 5, this.state.difficultyType).map((teamInfo, i) => {
+						{this.getFixturesByDifficulty(5, 5).map((teamInfo, i) => {
 							return (
 								<tr key={i}>
 									<td className="c-upcoming-fixtures__team">
@@ -108,7 +99,7 @@ class UpcomingFixtures extends Component {
 				<h3 className="c-upcoming-fixtures__header"><span>{titleDifficulty} Upcoming Fixtures (Next 3)</span><span className="c-upcoming-fixtures__switch" onClick={() => this.updateDifficultyType()}>{buttonText}</span></h3>
 				<table className="c-upcoming-fixtures__table">
 					<tbody>
-						{this.getFixturesByDifficulty(3, 5, this.state.difficultyType).map((teamInfo, i) => {
+						{this.getFixturesByDifficulty(3, 5).map((teamInfo, i) => {
 							return (
 								<tr key={i}>
 									<td className="c-upcoming-fixtures__team">

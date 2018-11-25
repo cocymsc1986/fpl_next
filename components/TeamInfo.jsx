@@ -3,9 +3,11 @@ import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import Link from 'next/link';
 
+import TeamFixtures from './TeamFixtures';
+
 import Styles from '../styles/team-styles';
 
-const TeamInfo = ({ data: { loading, error, team, playersByTeam } }) => {
+const TeamInfo = ({ data: { loading, error, team, playersByTeam }, id }) => {
 	if (loading) return "Loading..."
 	if (error || !team) {
 		console.log(error)
@@ -23,6 +25,7 @@ const TeamInfo = ({ data: { loading, error, team, playersByTeam } }) => {
 					</h1>
 				</div>
 			</div>
+			<TeamFixtures id={id} />
 			<div className="c-team__data">
 				<div className="c-team__container">
 					<table>

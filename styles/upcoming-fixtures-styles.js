@@ -67,8 +67,7 @@ export default css`
 
 	@media (min-width: ${theme.breakpoints.medium}) {
 		.c-upcoming-fixtures {
-			width: auto;
-			flex-grow: 1;
+			width: 60%;
 			margin-top: 0;
 		}
 	}
