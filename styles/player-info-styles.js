@@ -6,7 +6,7 @@ export default css`
 	.c-player__header {
 		position: relative;
 		border-bottom: 5px solid ${theme.colours.greyDarkest};
-		margin: ${theme.spacingValue}px 0;
+		margin: ${theme.spacingValue}px 0 0;
 	}
 
 	.c-player__header-container {

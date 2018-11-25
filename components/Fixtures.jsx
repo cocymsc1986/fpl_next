@@ -41,7 +41,7 @@ const Fixtures = ({
 				<table className="c-fixtures__list">
 					<thead className="c-fixtures__header">
 						<tr>
-							<th colspan="3">
+							<th colSpan="3">
 								<h4>Gameweek {FixtureData.id}</h4>
 							</th>
 						</tr>

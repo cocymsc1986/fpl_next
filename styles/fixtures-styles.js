@@ -26,7 +26,7 @@ export default css`
 	.c-fixtures__list {
 		background: ${theme.colours.greyDarkest};
 		/* Specific width for height calc */
-		padding: 23px ${theme.spacing};
+		padding-bottom: ${theme.spacing};
 		margin: 0;
 		list-style-type: none;
 		width: 100%;
@@ -79,11 +79,17 @@ export default css`
 
 	@media (min-width: ${theme.breakpoints.medium}) {
 		.c-fixtures__wrapper {
-			margin-right: ${theme.spacingValue * 2}px;
+			margin-right: ${theme.spacing};
 		}
 
 		.c-fixtures {
-			width: auto;
+			width: 40%;
+		}
+	}
+
+	@media (min-width: ${theme.breakpoints.large}) {
+		.c-fixtures__wrapper {
+			margin-right: ${theme.spacingValue * 2}px;
 		}
 	}
 `;
