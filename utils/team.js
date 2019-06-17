@@ -6,16 +6,17 @@ export const getTeamShortName = (teams, id) => {
 	return teams[id - 1].short_name;
 }
 
-export const getTeamsFixturesAndDifficulties = (team, id, amountOfFixtures = 5) => {
-	let difficulty = { team: id, fixtures: [] }
+export const getTeamsFixturesAndDifficulties = (teamFixtures, teamId, amountOfFixtures = 5) => {
+	const fixtures = teamFixtures.slice(0, amountOfFixtures).map(fixture => {
+		const homeTeam = fixture.team_h === parseInt(teamId);
+		const venueLabel = homeTeam ? 'h' : 'a';
 
-	for (let j = 0; j < amountOfFixtures; j++) {
-		if (team[j].team_h === parseInt(id)) {
-			difficulty.fixtures.push({ team: team[j].team_a, difficulty: team[j].team_h_difficulty, venue: 'h'});
-		} else {
-			difficulty.fixtures.push({ team: team[j].team_h, difficulty: team[j].team_a_difficulty, venue: 'a' });
+		return {
+			team: fixture[`team_${homeTeam ? 'a' : 'h'}`],
+			difficulty: fixture[`team_${venueLabel}_difficulty`],
+			venue: venueLabel
 		}
-	}
+	});
 
-	return difficulty;
+	return {team: teamId, fixtures}
 };
