@@ -1,13 +1,14 @@
-import React from 'react';
+import React from "react";
+import { withRouter } from "next/router";
 
-import Main from '../lib/Main';
-import withData from '../lib/withData';
-import TeamInfo from '../components/TeamInfo';
+import Main from "../lib/Main";
+import withData from "../lib/withData";
+import TeamInfo from "../components/TeamInfo";
 
-export default withData(props => {
-	return (
-		<Main>
-			<TeamInfo id={props.url.query.id} />
-		</Main>
-	);
-});
+export default withData(
+  withRouter(props => (
+    <Main>
+      <TeamInfo id={props.router.query.id} />
+    </Main>
+  ))
+);

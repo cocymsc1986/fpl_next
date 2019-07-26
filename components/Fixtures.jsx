@@ -110,7 +110,6 @@ const fixtures = gql`
     fixtures(id: $id) {
       fixtures {
         started
-        kickoff_time_formatted
         kickoff_time
         team_a
         team_h
