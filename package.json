@@ -20,7 +20,8 @@
     "next-apollo": "^2.0.0",
     "react": "^16.4.2",
     "react-apollo": "^2.1.9",
-    "react-dom": "^16.4.2"
+    "react-dom": "^16.4.2",
+    "react-ga": "^2.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
