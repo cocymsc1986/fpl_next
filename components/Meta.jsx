@@ -32,7 +32,8 @@ export default () => (
     <style jsx global>{`
       body {
         margin: 0;
-        font: ${theme.font.size.body} ${theme.font.familyDefault};
+        font-family: ${theme.font.familyDefault};
+        font-size: ${theme.font.size.body};
         color: ${theme.colours.black};
       }
     `}</style>
