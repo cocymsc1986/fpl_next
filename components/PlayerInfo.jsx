@@ -117,6 +117,7 @@ const PlayerInfo = ({ data: { loading, error, player } }) => {
       </header>
       <TeamFixtures id={team} />
       <div className="c-player__body">
+        <h2 className="c-player__body-header">Player stats</h2>
         <ul className="c-player__body-list">
           <li>
             Total points: <span>{total_points}</span>
