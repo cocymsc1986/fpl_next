@@ -13,7 +13,10 @@ export default css`
 
   .c-team-fixtures__item {
     border-bottom: 2px solid ${theme.colours.greyDarkest};
-    padding: ${theme.spacingValue}px ${theme.spacingValue / 2}px;
+    padding-top: ${theme.spacingValue}px;
+    padding-bottom: ${theme.spacingValue}px;
+    padding-left: ${theme.spacingValue / 2}px;
+    padding-right: ${theme.spacingValue / 2}px;
     text-align: center;
   }
 
@@ -28,7 +31,10 @@ export default css`
 
   @media (min-width: ${theme.breakpoints.medium}) {
     .c-team-fixtures__item {
-      padding: ${theme.spacing} ${theme.spacing};
+      padding-top: ${theme.spacing};
+      padding-bottom: ${theme.spacing};
+      padding-left: ${theme.spacing};
+      padding-right: ${theme.spacing};
     }
   }
 `;
