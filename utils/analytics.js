@@ -9,5 +9,9 @@ export const logPageView = () => {
     `Logging pageview for ${window.location.pathname}${window.location.search}`
   );
   ReactGA.set({ page: window.location });
-  ReactGA.pageview(`${window.location.pathname}${window.location.search}`);
+  ReactGA.pageview(
+    `${window.location.host}${window.location.pathname}${
+      window.location.search
+    }`
+  );
 };
