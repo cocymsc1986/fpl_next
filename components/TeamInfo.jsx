@@ -4,11 +4,12 @@ import gql from "graphql-tag";
 import Link from "next/link";
 
 import TeamFixtures from "./TeamFixtures";
+import Loader from "./Loader";
 
 import Styles from "../styles/team-styles";
 
 const TeamInfo = ({ data: { loading, error, team, playersByTeam }, id }) => {
-  if (loading) return "Loading...";
+  if (loading) return <Loader />;
   if (error || !team) {
     console.log(error);
     return "Error loading team data.";

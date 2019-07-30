@@ -2,6 +2,8 @@ import React from "react";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
 
+import Loader from "./Loader";
+
 import {
   getTeamShortName,
   getTeamsFixturesAndDifficulties
@@ -13,7 +15,7 @@ const TeamFixtures = ({
   data: { loading, error, getTeamsFixtures, allTeams },
   id
 }) => {
-  if (loading) return "Loading...";
+  if (loading) return <Loader />;
   if (error) {
     console.log(error);
     return "Error loading player.";
