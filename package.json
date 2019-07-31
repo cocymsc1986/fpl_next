@@ -25,6 +25,7 @@
     "react-apollo": "^2.1.9",
     "react-dom": "^16.8.6",
     "react-ga": "^2.6.0",
+    "react-spinners": "^0.5.13",
     "styled-jsx": "^3.2.1",
     "styled-jsx-plugin-sass": "^1.0.0",
     "webpack": "^4.38.0"

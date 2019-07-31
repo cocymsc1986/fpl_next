@@ -2,6 +2,7 @@ import React from "react";
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
 import Link from "next/link";
+import Loader from "./Loader";
 import { getTeamName } from "../utils/team";
 
 import Styles from "../styles/fixtures-styles";
@@ -11,7 +12,7 @@ const Fixtures = ({
   teamData: { teams },
   loadNewFixtures
 }) => {
-  if (loading) return "Loading...";
+  if (loading) return <Loader />;
   if (error) {
     console.log(error);
     return `Error loading fixtures.`;

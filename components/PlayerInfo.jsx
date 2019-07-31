@@ -4,11 +4,12 @@ import gql from "graphql-tag";
 import Link from "next/link";
 
 import TeamFixtures from "./TeamFixtures";
+import Loader from "./Loader";
 
 import Styles from "../styles/player-info-styles";
 
 const PlayerInfo = ({ data: { loading, error, player } }) => {
-  if (loading) return "Loading...";
+  if (loading) return <Loader />;
   if (error) {
     console.log(error);
     return "Error loading player.";

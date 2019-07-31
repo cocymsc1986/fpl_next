@@ -1,147 +1,185 @@
-import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import React, { Component } from "react";
+import { graphql } from "react-apollo";
+import gql from "graphql-tag";
 
-import Link from 'next/link';
+import Link from "next/link";
 
-import Styles from '../styles/upcoming-fixtures-styles';
-import { getTeamName, getTeamShortName, getTeamsFixturesAndDifficulties } from '../utils/team';
+import Loader from "./Loader";
+
+import Styles from "../styles/upcoming-fixtures-styles";
+import {
+  getTeamName,
+  getTeamShortName,
+  getTeamsFixturesAndDifficulties
+} from "../utils/team";
 
 class UpcomingFixtures extends Component {
-	constructor(props) {
-		super(props);
-		
-		this.state = {
-			difficultyType: 'easiest',
-		}
-	}
+  constructor(props) {
+    super(props);
 
-	getFixturesByDifficulty(amountOfFixtures = 5, amountOfTeams = 5) {
-		const { fixtures } = this.props.data.getAllTeamsFixtures; 
-		const { difficultyType } = this.state;
+    this.state = {
+      difficultyType: "easiest"
+    };
+  }
 
-		const teamFixtureDifficulty = fixtures.map((team, i) => (
-			getTeamsFixturesAndDifficulties(team, i + 1, amountOfFixtures)
-		));
+  getFixturesByDifficulty(amountOfFixtures = 5, amountOfTeams = 5) {
+    const { fixtures } = this.props.data.getAllTeamsFixtures;
+    const { difficultyType } = this.state;
 
-		const fixtureAverages = teamFixtureDifficulty.sort((a, b) => {
-			const sortA = a.fixtures.reduce((previous, current) => {
-				return current.difficulty + previous;
-			}, 0);
-			const sortB = b.fixtures.reduce((previous, current) => {
-				return current.difficulty + previous;
-			}, 0);
+    const teamFixtureDifficulty = fixtures.map((team, i) =>
+      getTeamsFixturesAndDifficulties(team, i + 1, amountOfFixtures)
+    );
 
-			return (sortA / a.fixtures.length) - (sortB / a.fixtures.length);
-		});
+    const fixtureAverages = teamFixtureDifficulty.sort((a, b) => {
+      const sortA = a.fixtures.reduce((previous, current) => {
+        return current.difficulty + previous;
+      }, 0);
+      const sortB = b.fixtures.reduce((previous, current) => {
+        return current.difficulty + previous;
+      }, 0);
 
-		if (difficultyType === 'easiest') {
-			return fixtureAverages.slice(0, amountOfTeams);
-		}
+      return sortA / a.fixtures.length - sortB / a.fixtures.length;
+    });
 
-		return fixtureAverages.slice(fixtureAverages.length - amountOfTeams, fixtureAverages.length).reverse();
-	};
+    if (difficultyType === "easiest") {
+      return fixtureAverages.slice(0, amountOfTeams);
+    }
 
-	updateDifficultyType() {
-		this.setState({
-			difficultyType: this.state.difficultyType === 'easiest' ? 'hardest' : 'easiest'
-		})
-	}
+    return fixtureAverages
+      .slice(fixtureAverages.length - amountOfTeams, fixtureAverages.length)
+      .reverse();
+  }
 
-	render() {
-		const { data: { loading, error }, teamData: { teams } } = this.props;
-		const { difficultyType } = this.state;
+  updateDifficultyType() {
+    this.setState({
+      difficultyType:
+        this.state.difficultyType === "easiest" ? "hardest" : "easiest"
+    });
+  }
 
-		if (loading || !teams) {
-			return (
-				<div>Loading...</div>
-			)
-		}
+  render() {
+    const {
+      data: { loading, error },
+      teamData: { teams }
+    } = this.props;
+    const { difficultyType } = this.state;
 
-		if (error) {
-			console.log(error)
-			return `Error loading fixtures.`
-		}
+    if (loading || !teams) {
+      return <Loader />;
+    }
 
-		const buttonText = difficultyType === 'easiest' ? 'Show Hardest' : 'Show Easiest';
-		const titleDifficulty = difficultyType === 'easiest' ?  'Easiest' : 'Hardest';
+    if (error) {
+      console.log(error);
+      return `Error loading fixtures.`;
+    }
 
-		return (
-			<div className="c-upcoming-fixtures">
-				<style jsx>{Styles}</style>
-				<h3 className="c-upcoming-fixtures__header"><span>{titleDifficulty} Upcoming Fixtures (Next 5)</span><span className="c-upcoming-fixtures__switch" onClick={() => this.updateDifficultyType()}>{buttonText}</span></h3>
-				<table className="c-upcoming-fixtures__table">
-					<tbody>
-						{this.getFixturesByDifficulty(5, 5).map((teamInfo, i) => {
-							return (
-								<tr key={i}>
-									<td className="c-upcoming-fixtures__team">
-										<Link href={{ pathname: '/team', query: { id: teamInfo.team }}}>
-											<a>
-												{teams && getTeamName(teams, teamInfo.team)}
-											</a>
-										</Link>
-									</td>
-									{teamInfo.fixtures.map((fixture, j) => {
-										return (
-											<td className="c-upcoming-fixtures__fixture" key={j}>
-												<p className="c-upcoming-fixtures__fixture-team">{getTeamShortName(teams, fixture.team)} ({fixture.venue})</p>
-												<p className="c-upcoming-fixtures__fixture-difficulty">{fixture.difficulty}</p>
-											</td>
-										)
-									})}
-								</tr>
-							)
-						})}
-					</tbody>
-				</table>
-	
-				<h3 className="c-upcoming-fixtures__header"><span>{titleDifficulty} Upcoming Fixtures (Next 3)</span><span className="c-upcoming-fixtures__switch" onClick={() => this.updateDifficultyType()}>{buttonText}</span></h3>
-				<table className="c-upcoming-fixtures__table">
-					<tbody>
-						{this.getFixturesByDifficulty(3, 5).map((teamInfo, i) => {
-							return (
-								<tr key={i}>
-									<td className="c-upcoming-fixtures__team">
-										<Link href={{ pathname: '/team', query: { id: teamInfo.team }}}>
-											<a>
-												{teams && getTeamName(teams, teamInfo.team)}
-											</a>
-										</Link>
-									</td>
-									{teamInfo.fixtures.map((fixture, j) => {
-										return (
-											<td className="c-upcoming-fixtures__fixture" key={j}>
-												<p className="c-upcoming-fixtures__fixture-team">{getTeamShortName(teams, fixture.team)} ({fixture.venue})</p>
-												<p className="c-upcoming-fixtures__fixture-difficulty">{fixture.difficulty}</p>
-											</td>
-										)
-									})}
-								</tr>
-							)
-						})}
-					</tbody>
-				</table>
-			</div>
-		)
-	}
+    const buttonText =
+      difficultyType === "easiest" ? "Show Hardest" : "Show Easiest";
+    const titleDifficulty =
+      difficultyType === "easiest" ? "Easiest" : "Hardest";
+
+    return (
+      <div className="c-upcoming-fixtures">
+        <style jsx>{Styles}</style>
+        <h3 className="c-upcoming-fixtures__header">
+          <span>{titleDifficulty} Upcoming Fixtures (Next 5)</span>
+          <span
+            className="c-upcoming-fixtures__switch"
+            onClick={() => this.updateDifficultyType()}
+          >
+            {buttonText}
+          </span>
+        </h3>
+        <table className="c-upcoming-fixtures__table">
+          <tbody>
+            {this.getFixturesByDifficulty(5, 5).map((teamInfo, i) => {
+              return (
+                <tr key={i}>
+                  <td className="c-upcoming-fixtures__team">
+                    <Link
+                      href={{ pathname: "/team", query: { id: teamInfo.team } }}
+                    >
+                      <a>{teams && getTeamName(teams, teamInfo.team)}</a>
+                    </Link>
+                  </td>
+                  {teamInfo.fixtures.map((fixture, j) => {
+                    return (
+                      <td className="c-upcoming-fixtures__fixture" key={j}>
+                        <p className="c-upcoming-fixtures__fixture-team">
+                          {getTeamShortName(teams, fixture.team)} (
+                          {fixture.venue})
+                        </p>
+                        <p className="c-upcoming-fixtures__fixture-difficulty">
+                          {fixture.difficulty}
+                        </p>
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+
+        <h3 className="c-upcoming-fixtures__header">
+          <span>{titleDifficulty} Upcoming Fixtures (Next 3)</span>
+          <span
+            className="c-upcoming-fixtures__switch"
+            onClick={() => this.updateDifficultyType()}
+          >
+            {buttonText}
+          </span>
+        </h3>
+        <table className="c-upcoming-fixtures__table">
+          <tbody>
+            {this.getFixturesByDifficulty(3, 5).map((teamInfo, i) => {
+              return (
+                <tr key={i}>
+                  <td className="c-upcoming-fixtures__team">
+                    <Link
+                      href={{ pathname: "/team", query: { id: teamInfo.team } }}
+                    >
+                      <a>{teams && getTeamName(teams, teamInfo.team)}</a>
+                    </Link>
+                  </td>
+                  {teamInfo.fixtures.map((fixture, j) => {
+                    return (
+                      <td className="c-upcoming-fixtures__fixture" key={j}>
+                        <p className="c-upcoming-fixtures__fixture-team">
+                          {getTeamShortName(teams, fixture.team)} (
+                          {fixture.venue})
+                        </p>
+                        <p className="c-upcoming-fixtures__fixture-difficulty">
+                          {fixture.difficulty}
+                        </p>
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
 }
 
 const upcomingFixtures = gql`
-	query getAllTeamsFixtures {
-		getAllTeamsFixtures {
-			fixtures {
-				team_a
-				team_h
-				team_a_difficulty
-				team_h_difficulty
-			}
-		}
-	}
-`
+  query getAllTeamsFixtures {
+    getAllTeamsFixtures {
+      fixtures {
+        team_a
+        team_h
+        team_a_difficulty
+        team_h_difficulty
+      }
+    }
+  }
+`;
 
 export default graphql(upcomingFixtures, {
   props: ({ data }) => ({
     data
   })
-})(UpcomingFixtures)
+})(UpcomingFixtures);

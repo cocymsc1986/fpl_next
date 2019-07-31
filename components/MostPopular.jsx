@@ -3,13 +3,15 @@ import { graphql } from "react-apollo";
 import gql from "graphql-tag";
 import Link from "next/link";
 
+import Loader from "./Loader";
+
 import Styles from "../styles/most-popular-styles";
 
 const MostPopular = ({
   data: { loading, error, playerWithHighestProp },
   stat
 }) => {
-  if (!playerWithHighestProp || loading) return "Loading...";
+  if (!playerWithHighestProp || loading) return <Loader />;
   if (error) {
     console.log(error);
     return "Error loading most popular players.";
