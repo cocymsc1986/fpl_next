@@ -6,7 +6,7 @@ import Styles from "../styles/loader-styles";
 export default () => (
   <div>
     <style jsx>{Styles}</style>
-    <div className={"loader"}>
+    <div className="loader">
       <ClipLoader loading={true} sizeUnit={"px"} size={100} />
     </div>
   </div>
