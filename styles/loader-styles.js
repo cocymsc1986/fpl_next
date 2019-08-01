@@ -5,8 +5,7 @@ import theme from "./theme";
 export default css`
   .loader {
     height: 100vh;
-    width: 100vh;
     text-align: center;
-    padding-top: 2rem;
+    padding-top: 3rem;
   }
 `;
