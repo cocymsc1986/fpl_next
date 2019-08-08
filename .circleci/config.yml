@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build: # runs not using Workflows must have a `build` job as entry point
-    working_directory: ~/ # directory where steps will run
+    working_directory: ~/fpl_next # directory where steps will run
     docker: # run the steps with Docker
       - image: circleci/node:10.16.0
     steps:
