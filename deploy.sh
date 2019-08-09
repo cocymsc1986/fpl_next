@@ -11,7 +11,7 @@
 set -e
 
 DOCKER_IMAGE=$1
-CONTAINER_NAME="fpl_next"
+CONTAINER_NAME='fpl_next'
 
 # Check for arguments
 if [[ $# -lt 1 ]] ; then
@@ -28,6 +28,6 @@ fi
 
 echo "Starting FPL app using Docker Image name: $DOCKER_IMAGE"
 
-docker run -d --rm=true -p 3000:3000  --name fpl_next $DOCKER_IMAGE
+docker run -d --rm=true -p 3000:3000 --name fpl_next $DOCKER_IMAGE
 
 docker ps -a
