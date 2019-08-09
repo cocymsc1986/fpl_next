@@ -40,9 +40,6 @@ jobs:
       - store_test_results: # https://circleci.com/docs/2.0/collect-test-data/
           path: test-results.xml
   deploy:
-    branches:
-      only:
-        - master
     working_directory: ~/fpl_next # directory where steps will run
     docker: # run the steps with Docker
       - image: circleci/node:10.16.0
@@ -62,3 +59,15 @@ jobs:
           name: Deploy app to Digital Ocean Server via Docker
           command: |
             ssh -o StrictHostKeyChecking=no cocymsc@178.62.14.68 "/bin/bash ./../../var/www/fantasyprem.co.uk/deploy.sh cocymsc1986/$IMAGE_NAME:$TAG"
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
