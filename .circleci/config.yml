@@ -50,8 +50,8 @@ jobs:
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
             docker push cocymsc1986/$IMAGE_NAME:$TAG
       - add_ssh_keys:
-        fingerprints:
-          - "9e:59:38:ee:b6:ff:f7:a5:b1:95:3f:f1:9a:6c:0d:a0"
+          fingerprints:
+            - "9e:59:38:ee:b6:ff:f7:a5:b1:95:3f:f1:9a:6c:0d:a0"
       - run:
           name: Deploy app to Digital Ocean Server via Docker
           command: |
