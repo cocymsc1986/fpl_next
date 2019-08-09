@@ -8,7 +8,7 @@ export default () => {
       <style jsx>{Styles}</style>
       <footer className="c-footer">
         <div className="c-footer__container">
-          <div>Fantasy Prem</div>
+          <div>Fantasy Prem Fan Site</div>
           <div>MSC Software Development Ltd</div>
         </div>
       </footer>
