@@ -7,11 +7,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Setup VirtualEnv
-          command: |
-            echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
-            echo 'export IMAGE_NAME=fpl_next' >> $BASH_ENV
-      - run:
           name: update-npm
           command: "sudo npm install -g npm@latest"
       - restore_cache: # restore the dependency cache
@@ -44,6 +39,11 @@ jobs:
     docker: # run the steps with Docker
       - image: circleci/node:10.16.0
     steps:
+      - run:
+          name: Setup VirtualEnv
+          command: |
+            echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
+            echo 'export IMAGE_NAME=fpl_next' >> $BASH_ENV
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
