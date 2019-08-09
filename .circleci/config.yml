@@ -7,6 +7,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Setup VirtualEnv
+          command: |
+            echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
+            echo 'export IMAGE_NAME=fpl_next' >> $BASH_ENV
+      - run:
           name: update-npm
           command: "sudo npm install -g npm@latest"
       - restore_cache: # restore the dependency cache
@@ -34,3 +39,26 @@ jobs:
       #    prefix: coverage
       - store_test_results: # https://circleci.com/docs/2.0/collect-test-data/
           path: test-results.xml
+  deploy:
+    branches:
+      only:
+        - master
+    working_directory: ~/fpl_next # directory where steps will run
+    docker: # run the steps with Docker
+      - image: circleci/node:10.16.0
+    steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build and push Docker image
+          command: |
+            docker build -t cocymsc1986/$IMAGE_NAME:$TAG .
+            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+            docker push cocymsc1986/$IMAGE_NAME:$TAG
+      - add_ssh_keys:
+          fingerprints:
+            - "9e:59:38:ee:b6:ff:f7:a5:b1:95:3f:f1:9a:6c:0d:a0"
+      - run:
+          name: Deploy app to Digital Ocean Server via Docker
+          command: |
+            ssh -o StrictHostKeyChecking=no cocymsc@178.62.14.68 "/bin/bash ./../../var/www/fantasyprem.co.uk/deploy.sh cocymsc1986/$IMAGE_NAME:$TAG"
