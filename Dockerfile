@@ -1,5 +1,9 @@
 FROM node:10-alpine
 
+ARG BUILD_API_VAR=http://localhost:4000/gql
+
+ENV API=$BUILD_API_VAR
+
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
 WORKDIR /home/node/app
