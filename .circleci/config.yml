@@ -55,4 +55,4 @@ jobs:
       - run:
           name: Deploy app to Digital Ocean Server via Docker
           command: |
-            ssh -o StrictHostKeyChecking=no cocymsc@178.62.14.68 "/bin/bash ./var/www/fantasyprem.co.uk/deploy.sh cocymsc/$IMAGE_NAME:$TAG"
+            ssh -o StrictHostKeyChecking=no cocymsc@178.62.14.68 "/bin/bash ./../../var/www/fantasyprem.co.uk/deploy.sh cocymsc/$IMAGE_NAME:$TAG"
