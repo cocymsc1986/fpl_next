@@ -11,7 +11,17 @@ const MostPopular = ({
   data: { loading, error, playerWithHighestProp },
   stat
 }) => {
-  if (!playerWithHighestProp || loading) return <Loader />;
+  if (!playerWithHighestProp || loading) {
+    return (
+      <div className="c-most-popular__block">
+        <style jsx>{Styles}</style>
+        <div className="c-most-popular__block-content">
+          <Loader size={60} invert />
+        </div>
+      </div>
+    );
+  }
+
   if (error) {
     console.log(error);
     return "Error loading most popular players.";
