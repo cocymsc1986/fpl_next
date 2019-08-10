@@ -28,6 +28,6 @@ fi
 
 echo "Starting FPL app using Docker Image name: $DOCKER_IMAGE"
 
-docker run -d -e "API=https://fantasyprem.co.uk/gql" --rm=true -p 5000:3000 --name fpl_next $DOCKER_IMAGE
+docker run -d -e "API_URL=https://fantasyprem.co.uk/gql" --rm=true -p 5000:3000 --name fpl_next $DOCKER_IMAGE
 
 docker ps -a
