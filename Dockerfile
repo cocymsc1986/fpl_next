@@ -1,6 +1,6 @@
 FROM node:10-alpine
 
-ARG BUILD_API_URL_VAR=http://localhost:4000/gql
+ARG BUILD_API_URL_VAR
 
 ENV API_URL=$BUILD_API_URL_VAR
 
