@@ -1,17 +1,38 @@
 import React from "react";
-import { graphql } from "react-apollo";
-import gql from "graphql-tag";
+import { gql, useQuery } from "@apollo/client";
 import Link from "next/link";
 
-import Loader from "./Loader";
+import { Loader } from "./Loader";
 
 import Styles from "../styles/most-popular-styles";
 
-const MostPopular = ({
-  data: { loading, error, playerWithHighestProp },
-  stat,
-}) => {
-  if (!playerWithHighestProp || loading) {
+const PLAYER_WITH_HIGHEST_PROP_QUERY = gql`
+  query playerWithHighestProp($prop: String) {
+    playerWithHighestProp(prop: $prop) {
+      player {
+        id
+        code
+        web_name
+        selected_by_percent
+        total_points
+        transfers_in_event
+        transfers_out_event
+        form
+        value_form
+      }
+    }
+  }
+`;
+
+export const MostPopular = ({ stat }) => {
+  const { loading, error, data } = useQuery(PLAYER_WITH_HIGHEST_PROP_QUERY, {
+    variables: {
+      prop: stat,
+    },
+    notifyOnNetworkStatusChange: true,
+  });
+
+  if (loading) {
     return (
       <div className="c-most-popular__block">
         <style jsx>{Styles}</style>
@@ -26,6 +47,10 @@ const MostPopular = ({
     console.log(error);
     return "Error loading most popular players.";
   }
+
+  const { playerWithHighestProp } = data;
+
+  console.log("data", playerWithHighestProp);
 
   const statMap = {
     selected_by_percent: "Most Selected",
@@ -63,32 +88,3 @@ const MostPopular = ({
     </div>
   );
 };
-
-const playerWithHighestProp = gql`
-  query playerWithHighestProp($prop: String) {
-    playerWithHighestProp(prop: $prop) {
-      player {
-        id
-        code
-        web_name
-        selected_by_percent
-        total_points
-        transfers_in_event
-        transfers_out_event
-        form
-        value_form
-      }
-    }
-  }
-`;
-
-export default graphql(playerWithHighestProp, {
-  options: (props) => ({
-    variables: {
-      prop: props.stat,
-    },
-  }),
-  props: ({ data }) => ({
-    data,
-  }),
-})(MostPopular);

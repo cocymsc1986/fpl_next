@@ -1,14 +1,12 @@
 import React from "react";
 
-import withData from "../lib/withData";
-import Main from "../lib/Main";
+import { App } from "../components/App";
+import { Search } from "../components/Search";
+import { DataSection } from "../components/DataSection";
 
-import Search from "../components/Search";
-import DataSection from "../components/DataSection";
-
-export default withData(props => (
-  <Main>
+export default () => (
+  <App>
     <Search />
     <DataSection />
-  </Main>
-));
+  </App>
+);

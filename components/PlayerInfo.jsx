@@ -1,19 +1,71 @@
 import React, { Fragment } from "react";
-import { graphql } from "react-apollo";
-import gql from "graphql-tag";
+import { gql, useQuery } from "@apollo/client";
 import Link from "next/link";
 
-import TeamFixtures from "./TeamFixtures";
-import Loader from "./Loader";
+import { TeamFixtures } from "./TeamFixtures";
+import { Loader } from "./Loader";
 
 import Styles from "../styles/player-info-styles";
 
-const PlayerInfo = ({ data: { loading, error, player } }) => {
+const PLAYER_QUERY = gql`
+  query player($id: Int) {
+    player(id: $id) {
+      first_name
+      second_name
+      web_name
+      squad_number
+      selected_by_percent
+      total_points
+      goals_scored
+      assists
+      bonus
+      transfers_in_event
+      transfers_out_event
+      form
+      value_form
+      code
+      team_code
+      assists
+      clean_sheets
+      goals_conceded
+      own_goals
+      penalties_saved
+      penalties_missed
+      yellow_cards
+      red_cards
+      saves
+      influence
+      creativity
+      threat
+      event_points
+      now_cost
+      in_dreamteam
+      selected_by_percent
+      news
+      element_type
+      status
+      chance_of_playing_this_round
+      points_per_game
+      team
+    }
+  }
+`;
+
+export const PlayerInfo = ({ id }) => {
+  const { loading, error, data } = useQuery(PLAYER_QUERY, {
+    variables: {
+      id,
+    },
+    notifyOnNetworkStatusChange: true,
+  });
+
   if (loading) return <Loader />;
   if (error) {
     console.log(error);
     return "Error loading player.";
   }
+
+  const { player } = data;
 
   const {
     first_name,
@@ -207,58 +259,3 @@ const PlayerInfo = ({ data: { loading, error, player } }) => {
     </section>
   );
 };
-
-const player = gql`
-  query player($id: Int) {
-    player(id: $id) {
-      first_name
-      second_name
-      web_name
-      squad_number
-      selected_by_percent
-      total_points
-      goals_scored
-      assists
-      bonus
-      transfers_in_event
-      transfers_out_event
-      form
-      value_form
-      code
-      team_code
-      assists
-      clean_sheets
-      goals_conceded
-      own_goals
-      penalties_saved
-      penalties_missed
-      yellow_cards
-      red_cards
-      saves
-      influence
-      creativity
-      threat
-      event_points
-      now_cost
-      in_dreamteam
-      selected_by_percent
-      news
-      element_type
-      status
-      chance_of_playing_this_round
-      points_per_game
-      team
-    }
-  }
-`;
-
-export default graphql(player, {
-  options: (props) => ({
-    variables: {
-      id: props.id,
-    },
-  }),
-  props: ({ data }) => ({
-    data,
-  }),
-})(PlayerInfo);

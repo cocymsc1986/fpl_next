@@ -1,28 +1,74 @@
 import React from "react";
-import { graphql, compose } from "react-apollo";
-import gql from "graphql-tag";
+import { gql, useQuery } from "@apollo/client";
 
-import Loader from "./Loader";
+import { Loader } from "./Loader";
 
 import {
   getTeamShortName,
-  getTeamsFixturesAndDifficulties
+  getTeamsFixturesAndDifficulties,
 } from "../utils/team";
 
 import Styles from "../styles/team-fixtures-styles";
 
-const TeamFixtures = ({
-  data: { loading, error, getTeamsFixtures, allTeams },
-  id
-}) => {
-  if (loading) return <Loader />;
-  if (error) {
-    console.log(error);
-    return "Error loading player.";
+const GET_TEAMS_FIXTURES_QUERY = gql`
+  query getTeamsFixtures($id: Int, $amount: Int) {
+    getTeamsFixtures(id: $id, amount: $amount) {
+      fixtures {
+        team_a
+        team_h
+        team_h_difficulty
+        team_a_difficulty
+      }
+    }
+  }
+`;
+
+const ALL_TEAMS_QUERY = gql`
+  query allTeams {
+    allTeams {
+      teams {
+        id
+        code
+        name
+        short_name
+      }
+    }
+  }
+`;
+
+export const TeamFixtures = ({ id }) => {
+  const {
+    loading: fixturesLoading,
+    error: fixturesError,
+    data: fixturesData,
+  } = useQuery(GET_TEAMS_FIXTURES_QUERY, {
+    variables: {
+      id,
+      amount: 5,
+    },
+    notifyOnNetworkStatusChange: true,
+  });
+
+  const {
+    loading: teamsLoading,
+    error: teamsError,
+    data: teamsData,
+  } = useQuery(ALL_TEAMS_QUERY, {
+    notifyOnNetworkStatusChange: true,
+  });
+
+  if (teamsLoading || fixturesLoading) return <Loader />;
+  if (teamsError || fixturesError) {
+    console.log(teamsError, fixturesError);
+    return "Error loading team fixtures.";
   }
 
-  const { fixtures } = getTeamsFixtures;
-  const { teams } = allTeams;
+  const {
+    getTeamsFixtures: { fixtures },
+  } = fixturesData;
+  const {
+    allTeams: { teams },
+  } = teamsData;
 
   return (
     <table className="c-team-fixtures">
@@ -55,46 +101,3 @@ const TeamFixtures = ({
     </table>
   );
 };
-
-const getTeamsFixturesQuery = gql`
-  query getTeamsFixtures($id: Int, $amount: Int) {
-    getTeamsFixtures(id: $id, amount: $amount) {
-      fixtures {
-        team_a
-        team_h
-        team_h_difficulty
-        team_a_difficulty
-      }
-    }
-  }
-`;
-
-const allTeams = gql`
-  query allTeams {
-    allTeams {
-      teams {
-        id
-        code
-        name
-        short_name
-      }
-    }
-  }
-`;
-
-export default compose(
-  graphql(getTeamsFixturesQuery, {
-    options: props => ({
-      variables: {
-        id: props.id,
-        amount: 5
-      }
-    }),
-    props: ({ data }) => ({ data })
-  }),
-  graphql(allTeams, {
-    props: ({ data, ownProps: { data: newData } }) => ({
-      data: { ...data, ...newData }
-    })
-  })
-)(TeamFixtures);

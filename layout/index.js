@@ -1,9 +1,9 @@
 import { Component } from "react";
 import { initGA, logPageView } from "../utils/analytics";
 
-import Meta from "../components/Meta";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import { Meta } from "../components/Meta";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 
 class Layout extends Component {
   componentDidMount() {

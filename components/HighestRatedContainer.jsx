@@ -1,9 +1,9 @@
 import React from "react";
 
-import HighestRated from "./HighestRated";
+import { HighestRated } from "./HighestRated";
 import Styles from "../styles/highest-rated-styles";
 
-const HighestRatedRow = ({ teamData }) => {
+export const HighestRatedContainer = ({ teamData }) => {
   const { teams } = teamData;
 
   return (
@@ -19,5 +19,3 @@ const HighestRatedRow = ({ teamData }) => {
     </div>
   );
 };
-
-export default HighestRatedRow;

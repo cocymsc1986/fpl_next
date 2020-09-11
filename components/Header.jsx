@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import Styles from "../styles/header-styles";
 
-const Header = () => {
+export const Header = () => {
   return (
     <header>
       <style jsx>{Styles}</style>
@@ -15,5 +15,3 @@ const Header = () => {
     </header>
   );
 };
-
-export default Header;

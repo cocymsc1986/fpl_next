@@ -1,17 +1,38 @@
 import React from "react";
-import { graphql } from "react-apollo";
-import gql from "graphql-tag";
+import { gql, useQuery } from "@apollo/client";
 import Link from "next/link";
 
-import Loader from "./Loader";
+import { Loader } from "./Loader";
 
 import Styles from "../styles/highest-rated-styles";
 
-const HighestRated = ({
-  data: { loading, error, playersByPropAndPos },
-  position,
-  teams,
-}) => {
+const PLAYERS_BY_PROP_AND_POSITION_QUERY = gql`
+  query playersByPropAndPos($prop: String, $position: String, $amount: Int) {
+    playersByPropAndPos(prop: $prop, position: $position, amount: $amount) {
+      players {
+        id
+        web_name
+        team
+        now_cost
+        total_points
+      }
+    }
+  }
+`;
+
+export const HighestRated = ({ position, teams }) => {
+  const { loading, error, data } = useQuery(
+    PLAYERS_BY_PROP_AND_POSITION_QUERY,
+    {
+      variables: {
+        prop: "total_points",
+        position: position,
+        amount: 10,
+      },
+      notifyOnNetworkStatusChange: true,
+    }
+  );
+
   if (loading) return <Loader />;
   if (error) {
     console.log(error);
@@ -22,8 +43,11 @@ const HighestRated = ({
     return teams.find((team) => team.id === id).short_name;
   };
 
-  if (playersByPropAndPos) {
-    const { players } = playersByPropAndPos;
+  if (data) {
+    const {
+      playersByPropAndPos: { players },
+    } = data;
+
     return (
       <div className="c-highest-rated__grid-item">
         <style jsx>{Styles}</style>
@@ -61,30 +85,3 @@ const HighestRated = ({
     );
   }
 };
-
-const playersByPropAndPos = gql`
-  query playersByPropAndPos($prop: String, $position: String, $amount: Int) {
-    playersByPropAndPos(prop: $prop, position: $position, amount: $amount) {
-      players {
-        id
-        web_name
-        team
-        now_cost
-        total_points
-      }
-    }
-  }
-`;
-
-export default graphql(playersByPropAndPos, {
-  options: (props) => ({
-    variables: {
-      prop: "total_points",
-      position: props.position,
-      amount: 10,
-    },
-  }),
-  props: ({ data }) => ({
-    data,
-  }),
-})(HighestRated);

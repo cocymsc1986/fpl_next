@@ -3,6 +3,13 @@
   "version": "0.0.1",
   "description": "FPL data webapp front end",
   "main": "index.js",
+  "browserslist": [
+    "last 3 and_chr versions",
+    "last 3 chrome versions",
+    "last 3 opera versions",
+    "last 3 ios_saf versions",
+    "last 3 safari versions"
+  ],
   "scripts": {
     "dev": "next",
     "build": "next build",
@@ -12,27 +19,26 @@
   "author": "Michael Cockcroft",
   "license": "MIT",
   "dependencies": {
-    "apollo-boost": "^0.1.14",
-    "apollo-cache-inmemory": "^1.6.2",
-    "apollo-client": "^2.6.3",
-    "apollo-link-http": "^1.5.15",
+    "@apollo/client": "^3.1.5",
+    "apollo-boost": "^0.4.9",
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-link-http": "^1.5.17",
     "dotenv": "^6.1.0",
-    "graphql": "^0.13.2",
-    "next": "^9.0.2",
-    "next-apollo": "^2.0.0",
-    "node-sass": "^4.12.0",
-    "react": "^16.8.6",
-    "react-apollo": "^2.1.9",
-    "react-dom": "^16.8.6",
+    "graphql": "^15.3.0",
+    "next": "^9.5.0",
+    "node-sass": "^4.14.1",
+    "react": "^16.13.1",
+    "react-apollo": "^3.1.5",
+    "react-dom": "^16.13.1",
     "react-ga": "^2.6.0",
-    "react-spinners": "^0.5.13",
+    "react-spinners": "^0.9.0",
     "styled-jsx": "^3.2.1",
     "styled-jsx-plugin-sass": "^1.0.0",
-    "webpack": "^4.38.0"
+    "webpack": "^4.44.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@babel/preset-env": "^7.4.3",
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
     "babel-jest": "^24.7.1",
     "jest": "^24.7.1"
   }
