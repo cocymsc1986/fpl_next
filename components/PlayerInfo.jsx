@@ -49,7 +49,7 @@ const PlayerInfo = ({ data: { loading, error, player } }) => {
     status,
     chance_of_playing_this_round,
     points_per_game,
-    team
+    team,
   } = player;
 
   const keeper = element_type === 1;
@@ -108,7 +108,7 @@ const PlayerInfo = ({ data: { loading, error, player } }) => {
               <a>
                 <img
                   className="c-player__header-team"
-                  src={`https://platform-static-files.s3.amazonaws.com/premierleague/badges/t${team_code}.svg`}
+                  src={`https://resources.premierleague.com/premierleague/badges/t${team_code}.svg`}
                   alt="team logo"
                 />
               </a>
@@ -253,12 +253,12 @@ const player = gql`
 `;
 
 export default graphql(player, {
-  options: props => ({
+  options: (props) => ({
     variables: {
-      id: props.id
-    }
+      id: props.id,
+    },
   }),
   props: ({ data }) => ({
-    data
-  })
+    data,
+  }),
 })(PlayerInfo);

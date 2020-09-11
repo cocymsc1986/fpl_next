@@ -9,7 +9,7 @@ import Styles from "../styles/most-popular-styles";
 
 const MostPopular = ({
   data: { loading, error, playerWithHighestProp },
-  stat
+  stat,
 }) => {
   if (!playerWithHighestProp || loading) {
     return (
@@ -33,7 +33,7 @@ const MostPopular = ({
     transfers_in_event: "Most In This Week",
     transfers_out_event: "Most Out This Week",
     form: "Form",
-    value_form: "Best Value"
+    value_form: "Best Value",
   };
 
   const { player } = playerWithHighestProp;
@@ -55,9 +55,7 @@ const MostPopular = ({
         <div className="c-most-popular__image-container">
           <img
             className="c-most-popular__image"
-            src={`https://platform-static-files.s3.amazonaws.com/premierleague/photos/players/110x140/p${
-              player.code
-            }.png`}
+            src={`https://resources.premierleague.com/premierleague/photos/players/110x140/p${player.code}.png`}
             alt={player.web_name}
           />
         </div>
@@ -85,12 +83,12 @@ const playerWithHighestProp = gql`
 `;
 
 export default graphql(playerWithHighestProp, {
-  options: props => ({
+  options: (props) => ({
     variables: {
-      prop: props.stat
-    }
+      prop: props.stat,
+    },
   }),
   props: ({ data }) => ({
-    data
-  })
+    data,
+  }),
 })(MostPopular);

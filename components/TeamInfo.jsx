@@ -22,9 +22,7 @@ const TeamInfo = ({ data: { loading, error, team, playersByTeam }, id }) => {
         <div className="c-team__header-container">
           <div className="c-team__badge">
             <img
-              src={`https://platform-static-files.s3.amazonaws.com/premierleague/badges/t${
-                team.code
-              }.svg`}
+              src={`https://resources.premierleague.com/premierleague/badges/t${team.code}.svg`}
               alt={`${team.name} logo`}
             />
           </div>
@@ -55,7 +53,7 @@ const TeamInfo = ({ data: { loading, error, team, playersByTeam }, id }) => {
                         <Link
                           href={{
                             pathname: "/player",
-                            query: { id: player.id }
+                            query: { id: player.id },
                           }}
                         >
                           <a className="c-team__player-link">
@@ -108,21 +106,21 @@ const playersByTeam = gql`
 
 export default compose(
   graphql(team, {
-    options: props => ({
+    options: (props) => ({
       variables: {
-        id: props.id
-      }
+        id: props.id,
+      },
     }),
-    props: ({ data }) => ({ data })
+    props: ({ data }) => ({ data }),
   }),
   graphql(playersByTeam, {
-    options: props => ({
+    options: (props) => ({
       variables: {
-        team: props.id
-      }
+        team: props.id,
+      },
     }),
     props: ({ data, ownProps: { data: newData } }) => ({
-      data: { ...data, ...newData }
-    })
+      data: { ...data, ...newData },
+    }),
   })
 )(TeamInfo);
