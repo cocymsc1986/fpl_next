@@ -1,24 +1,65 @@
 import React from "react";
-import { graphql } from "react-apollo";
-import gql from "graphql-tag";
+import { gql, useQuery, NetworkStatus } from "@apollo/client";
 import Link from "next/link";
-import Loader from "./Loader";
+
+import { Loader } from "./Loader";
 import { getTeamName } from "../utils/team";
 
 import Styles from "../styles/fixtures-styles";
 
-const Fixtures = ({
-  data: { loading, error, fixtures: FixtureData },
-  teamData: { teams },
-  loadNewFixtures
-}) => {
+const FIXTURES_QUERY = gql`
+  query fixtures($id: Int) {
+    fixtures(id: $id) {
+      fixtures {
+        started
+        kickoff_time
+        team_a
+        team_h
+        team_a_score
+        team_h_score
+      }
+      id
+    }
+  }
+`;
+
+export const Fixtures = ({ id, teamData }) => {
+  const { loading, error, data, fetchMore, networkStatus } = useQuery(
+    FIXTURES_QUERY,
+    {
+      variables: id,
+      notifyOnNetworkStatusChange: true,
+    }
+  );
+
+  const loadingMoreFixtures = networkStatus === NetworkStatus.fetchMore;
+
+  const loadNewFixtures = (id) => {
+    fetchMore({
+      variables: {
+        id,
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult.fixtures) {
+          return previousResult;
+        }
+        return Object.assign(
+          {},
+          {
+            fixtures: fetchMoreResult.fixtures,
+          }
+        );
+      },
+    });
+  };
+
   if (loading) return <Loader />;
   if (error) {
     console.log(error);
     return `Error loading fixtures.`;
   }
 
-  const getKOTime = date => {
+  const getKOTime = (date) => {
     const convertedDate = new Date(date);
     const day = convertedDate.getDate();
     const month = convertedDate.getMonth() + 1;
@@ -39,7 +80,12 @@ const Fixtures = ({
     );
   };
 
-  const { fixtures } = FixtureData;
+  const {
+    fixtures: { fixtures },
+  } = data;
+
+  const { teams } = teamData;
+
   return (
     <div className="c-fixtures">
       <style jsx>{Styles}</style>
@@ -48,7 +94,7 @@ const Fixtures = ({
           <thead className="c-fixtures__header">
             <tr>
               <th colSpan="3">
-                <h4>Gameweek {FixtureData.id}</h4>
+                <h4>Gameweek {id}</h4>
               </th>
             </tr>
           </thead>
@@ -61,7 +107,7 @@ const Fixtures = ({
                   team_h_score,
                   team_a_score,
                   started,
-                  kickoff_time
+                  kickoff_time,
                 } = fixture;
                 return (
                   <tr className="c-fixtures__list-item" key={i}>
@@ -91,13 +137,13 @@ const Fixtures = ({
         </table>
         <button
           className="c-fixtures__button"
-          onClick={() => loadNewFixtures(FixtureData.id - 1)}
+          onClick={() => loadNewFixtures(id - 1)}
         >
           Previous Week
         </button>
         <button
           className="c-fixtures__button"
-          onClick={() => loadNewFixtures(FixtureData.id + 1)}
+          onClick={() => loadNewFixtures(id + 1)}
         >
           Next Week
         </button>
@@ -105,43 +151,3 @@ const Fixtures = ({
     </div>
   );
 };
-
-const fixtures = gql`
-  query fixtures($id: Int) {
-    fixtures(id: $id) {
-      fixtures {
-        started
-        kickoff_time
-        team_a
-        team_h
-        team_a_score
-        team_h_score
-      }
-      id
-    }
-  }
-`;
-
-export default graphql(fixtures, {
-  props: ({ data }) => ({
-    data,
-    loadNewFixtures: id => {
-      return data.fetchMore({
-        variables: {
-          id
-        },
-        updateQuery: (previousResult, { fetchMoreResult }) => {
-          if (!fetchMoreResult.fixtures) {
-            return previousResult;
-          }
-          return Object.assign(
-            {},
-            {
-              fixtures: fetchMoreResult.fixtures
-            }
-          );
-        }
-      });
-    }
-  })
-})(Fixtures);

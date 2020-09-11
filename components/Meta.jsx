@@ -1,7 +1,7 @@
 import Head from "next/head";
 import theme from "../styles/theme";
 
-export default () => (
+export const Meta = () => (
   <div>
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,19 +14,19 @@ export default () => (
       <link
         rel="apple-touch-icon"
         sizes="180x180"
-        href="/static/apple-touch-icon.png"
+        href="/public/apple-touch-icon.png"
       />
       <link
         rel="icon"
         type="image/png"
         sizes="32x32"
-        href="/static/favicon-32x32.png"
+        href="/public/favicon-32x32.png"
       />
       <link
         rel="icon"
         type="image/png"
         sizes="16x16"
-        href="/static/favicon-16x16.png"
+        href="/public/favicon-16x16.png"
       />
     </Head>
     <style jsx global>{`

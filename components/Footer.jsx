@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 
 import Styles from "../styles/footer-styles";
 
-export default () => {
+export const Footer = () => {
   return (
     <Fragment>
       <style jsx>{Styles}</style>

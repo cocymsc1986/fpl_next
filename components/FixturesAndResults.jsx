@@ -1,7 +1,7 @@
 import React from "react";
 
-import Fixtures from "./Fixtures";
-import UpcomingFixtures from "./UpcomingFixtures";
+import { Fixtures } from "./Fixtures";
+import { UpcomingFixtures } from "./UpcomingFixtures";
 
 import Styles from "../styles/fixtures-and-results-styles";
 
@@ -17,5 +17,3 @@ export const FixturesAndResults = ({ teamData }) => {
     </div>
   );
 };
-
-export default FixturesAndResults;

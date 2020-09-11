@@ -1,19 +1,71 @@
 import React from "react";
-import { graphql, compose } from "react-apollo";
-import gql from "graphql-tag";
+import { gql, useQuery } from "@apollo/client";
 import Link from "next/link";
 
-import TeamFixtures from "./TeamFixtures";
-import Loader from "./Loader";
+import { TeamFixtures } from "./TeamFixtures";
+import { Loader } from "./Loader";
 
 import Styles from "../styles/team-styles";
 
-const TeamInfo = ({ data: { loading, error, team, playersByTeam }, id }) => {
-  if (loading) return <Loader />;
-  if (error || !team) {
+const TEAM_QUERY = gql`
+  query team($id: Int) {
+    team(id: $id) {
+      name
+      code
+    }
+  }
+`;
+
+const PLAYERS_BY_TEAM_QUERY = gql`
+  query playersByTeam($team: Int) {
+    playersByTeam(team: $team) {
+      players {
+        id
+        element_type
+        first_name
+        web_name
+        form
+        status
+        points_per_game
+        now_cost
+        total_points
+      }
+    }
+  }
+`;
+
+export const TeamInfo = ({ id }) => {
+  const { loading: teamLoading, error: teamError, data: teamData } = useQuery(
+    TEAM_QUERY,
+    {
+      variables: {
+        id,
+      },
+      notifyOnNetworkStatusChange: true,
+    }
+  );
+
+  const {
+    loading: playersLoading,
+    error: playersError,
+    data: playersData,
+  } = useQuery(PLAYERS_BY_TEAM_QUERY, {
+    variables: {
+      team: id,
+    },
+    notifyOnNetworkStatusChange: true,
+  });
+
+  if (teamLoading || playersLoading) return <Loader />;
+  if (teamError || playersError) {
     console.log(error);
     return "Error loading team data.";
   }
+
+  const { team } = teamData;
+  const { playersByTeam } = playersData;
+
+  console.log("****", playersData);
 
   return (
     <div className="c-team">
@@ -76,51 +128,3 @@ const TeamInfo = ({ data: { loading, error, team, playersByTeam }, id }) => {
     </div>
   );
 };
-
-const team = gql`
-  query team($id: Int) {
-    team(id: $id) {
-      name
-      code
-    }
-  }
-`;
-
-const playersByTeam = gql`
-  query playersByTeam($team: Int) {
-    playersByTeam(team: $team) {
-      players {
-        id
-        element_type
-        first_name
-        web_name
-        form
-        status
-        points_per_game
-        now_cost
-        total_points
-      }
-    }
-  }
-`;
-
-export default compose(
-  graphql(team, {
-    options: (props) => ({
-      variables: {
-        id: props.id,
-      },
-    }),
-    props: ({ data }) => ({ data }),
-  }),
-  graphql(playersByTeam, {
-    options: (props) => ({
-      variables: {
-        team: props.id,
-      },
-    }),
-    props: ({ data, ownProps: { data: newData } }) => ({
-      data: { ...data, ...newData },
-    }),
-  })
-)(TeamInfo);
