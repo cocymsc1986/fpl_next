@@ -50,8 +50,6 @@ export const MostPopular = ({ stat }) => {
 
   const { playerWithHighestProp } = data;
 
-  console.log("data", playerWithHighestProp);
-
   const statMap = {
     selected_by_percent: "Most Selected",
     total_points: "Total Points",

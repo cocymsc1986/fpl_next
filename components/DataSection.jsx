@@ -48,7 +48,6 @@ export const DataSection = () => {
 
   const { allTeams } = data;
   const gw = gwStatusData.eventStatus.status[0].event;
-  console.log(gw);
 
   return (
     <>

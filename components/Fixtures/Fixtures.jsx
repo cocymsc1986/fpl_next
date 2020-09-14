@@ -1,5 +1,5 @@
 import React from "react";
-import { gql, useQuery, NetworkStatus } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import Link from "next/link";
 
 import { Loader } from "../Loader";
