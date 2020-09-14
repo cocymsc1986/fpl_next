@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { gql, useQuery } from "@apollo/client";
 
 import { HighestRatedContainer } from "./HighestRatedContainer";
@@ -19,24 +19,41 @@ const ALL_TEAMS_QUERY = gql`
   }
 `;
 
+const EVENT_STATUS_QUERY = gql`
+  query eventStatus {
+    eventStatus {
+      status {
+        event
+      }
+    }
+  }
+`;
+
 export const DataSection = () => {
   const { loading, error, data } = useQuery(ALL_TEAMS_QUERY, {
     notifyOnNetworkStatusChange: true,
   });
 
-  if (loading) return <Loader />;
-  if (error) {
+  const {
+    loading: gwStatusLoading,
+    error: gwStatusError,
+    data: gwStatusData,
+  } = useQuery(EVENT_STATUS_QUERY);
+
+  if (loading || gwStatusLoading) return <Loader />;
+  if (error || gwStatusError) {
     console.log(error);
     return "Error loading teamData.";
   }
 
   const { allTeams } = data;
+  const gw = gwStatusData.eventStatus.status[0].event;
 
   return (
-    <Fragment>
+    <>
       <MostPopularContainer teamData={allTeams} />
       <HighestRatedContainer teamData={allTeams} />
-      <FixturesAndResults teamData={allTeams} />
-    </Fragment>
+      <FixturesAndResults teamData={allTeams} gw={gw} />
+    </>
   );
 };

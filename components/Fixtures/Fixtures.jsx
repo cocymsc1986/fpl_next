@@ -1,11 +1,11 @@
 import React from "react";
-import { gql, useQuery, NetworkStatus } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import Link from "next/link";
 
-import { Loader } from "./Loader";
-import { getTeamName } from "../utils/team";
+import { Loader } from "../Loader";
+import { getTeamName } from "../../utils/team";
 
-import Styles from "../styles/fixtures-styles";
+import Styles from "../../styles/fixtures-styles";
 
 const FIXTURES_QUERY = gql`
   query fixtures($id: Int) {
@@ -23,16 +23,13 @@ const FIXTURES_QUERY = gql`
   }
 `;
 
-export const Fixtures = ({ id, teamData }) => {
-  const { loading, error, data, fetchMore, networkStatus } = useQuery(
-    FIXTURES_QUERY,
-    {
-      variables: id,
-      notifyOnNetworkStatusChange: true,
-    }
-  );
-
-  const loadingMoreFixtures = networkStatus === NetworkStatus.fetchMore;
+export const Fixtures = ({ teamData, gw }) => {
+  const { loading, error, data, fetchMore } = useQuery(FIXTURES_QUERY, {
+    variables: {
+      id: gw,
+    },
+    notifyOnNetworkStatusChange: true,
+  });
 
   const loadNewFixtures = (id) => {
     fetchMore({
@@ -43,6 +40,7 @@ export const Fixtures = ({ id, teamData }) => {
         if (!fetchMoreResult.fixtures) {
           return previousResult;
         }
+
         return Object.assign(
           {},
           {
@@ -81,9 +79,8 @@ export const Fixtures = ({ id, teamData }) => {
   };
 
   const {
-    fixtures: { fixtures },
+    fixtures: { fixtures, id },
   } = data;
-
   const { teams } = teamData;
 
   return (

@@ -10,8 +10,6 @@ export const logPageView = () => {
   );
   ReactGA.set({ page: window.location });
   ReactGA.pageview(
-    `${window.location.host}${window.location.pathname}${
-      window.location.search
-    }`
+    `${window.location.host}${window.location.pathname}${window.location.search}`
   );
 };
