@@ -65,8 +65,6 @@ export const TeamInfo = ({ id }) => {
   const { team } = teamData;
   const { playersByTeam } = playersData;
 
-  console.log("****", playersData);
-
   return (
     <div className="c-team">
       <style jsx>{Styles}</style>
