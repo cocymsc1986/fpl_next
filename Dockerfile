@@ -2,7 +2,11 @@ FROM node:10-alpine
 
 ARG BUILD_API_URL_VAR
 
+ARG BUILD_API_KEY_VAR
+
 ENV API_URL=$BUILD_API_URL_VAR
+
+ENV API_KEY=$BUILD_API_KEY_VAR
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
